@@ -81,41 +81,44 @@ export default function StageContainer({children}:{children:ReactNode}) {
   if (!mounted) return <></>;
 
   return (
-    <div className="flex-col tx-altfont-1  ">
-      <div className="pos-abs pa-2 bottom-0 mb-100 mr-8 right-0 flex-col bg-w-50 bord-r-25 z-600">
-        {!!lastPrices?.spotPrice &&
-      <div className="flex-col gap-2 tx-lx tx-roman">
-          <div>{!lastPrices?.spotPrice ? "..." : parseInt(lastPrices?.spotPrice)}</div>
-          <div>{!lastPrices?.futurePrice ? "..." : parseInt(lastPrices?.futurePrice)}</div>
+    <div className="flex-col tx-altfont-4  ">
+      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-100 right-0" >
+
+        <div className=" pa-2  flex-col bg-w-50 bord-r-25 ">
+          {!!lastPrices?.spotPrice &&
+        <div className="flex-col gap-2 tx-md mb-4">
+            <div>s:{!lastPrices?.spotPrice ? "..." : parseInt(lastPrices?.spotPrice)}</div>
+            <div className="opaci-50">f:{!lastPrices?.futurePrice ? "..." : parseInt(lastPrices?.futurePrice)}</div>
+          </div>
+          }
+        
+          <div className="">
+            {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
+          </div>
+          <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+            <div className="Q_xs">⭐</div>
+            <div className="Q_sm_x">Points:</div>
+            <div>{ points }</div>
+          </div>
+            {typeof window !== 'undefined'  && <>
+              <div className="Q_md_x flex gap-1 opaci-50 tx-lg">
+                <div>Goal:</div>
+                <div>{ LS_maxScore }</div>
+              </div>
+              
+              <div className="Q_xs_sm flex gap-1 opaci-50 tx-lg ">
+                <div>🎯</div>
+                <div>{ LS_maxScore }</div>
+              </div>
+            </>}
+          <div className="opaci-chov--50">
+            <button className="tx-xl pointer tx-altfont-1 bord-r-10 px-3" onClick={triggerStart}>
+              <div className="Q_xs ">{points == 0 ? `+` : `+`}</div>
+              <div className="Q_sm_x">{points == 0 ? `Start` : `+`}</div>
+            </button>
+          </div>
+          {children}
         </div>
-        }
-      
-        <div className="tx-roman">
-          {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
-        </div>
-        <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
-          <h2 className="Q_xs">⭐</h2>
-          <h2 className="Q_sm_x">Points:</h2>
-          <h2>{ points }</h2>
-        </div>
-          {typeof window !== 'undefined'  && <>
-            <div className="Q_md_x flex gap-1 opaci-50 tx-lg">
-              <h1>Goal:</h1>
-              <h1>{ LS_maxScore }</h1>
-            </div>
-            
-            <div className="Q_xs_sm flex gap-1 opaci-50 tx-sm">
-              <h1>🎯</h1>
-              <h1>{ LS_maxScore }</h1>
-            </div>
-          </>}
-        <div className="opaci-chov--50">
-          <button className="tx-xl pointer tx-altfont-1 bord-r-10 px-3" onClick={triggerStart}>
-            <div className="Q_xs ">{points == 0 ? `+` : `+`}</div>
-            <div className="Q_sm_x">{points == 0 ? `Start` : `+`}</div>
-          </button>
-        </div>
-        {children}
       </div>
 
       <Canvas style={{width:"100vw",height:"100vh"}} shadows camera={{fov:40,position:[isSmallDevice?5:3,0,0]}}
