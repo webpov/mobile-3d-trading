@@ -1,7 +1,7 @@
 "use client"
 import { SceneEnv } from "@/model/core/SceneEnv";
 import SceneWrapper from "@/model/level/SceneWrapper";
-import { Box, Html, OrbitControls, useTexture } from "@react-three/drei";
+import { Box, GizmoHelper, GizmoViewcube, Html, OrbitControls, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ReactNode, Suspense, useEffect, useMemo, useState } from "react"
 import { useLocalStorage, useMediaQuery } from "usehooks-ts"
@@ -82,7 +82,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
-      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-100 right-0" >
+      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 right-0" >
 
         <div className=" pa-2  flex-col bg-w-50 bord-r-25 ">
           {!!lastPrices?.spotPrice &&
@@ -124,7 +124,26 @@ export default function StageContainer({children}:{children:ReactNode}) {
       <Canvas style={{width:"100vw",height:"100vh"}} shadows camera={{fov:40,position:[isSmallDevice?5:3,0,0]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
-      <OrbitControls />
+      
+<GizmoHelper  alignment="bottom-left" margin={[50, 50]} >
+        <GizmoViewcube
+          
+          color="gray"
+          
+          strokeColor="white"
+          textColor="black"
+          
+          hoverColor="#999"
+          opacity={1}
+          
+        />
+      </GizmoHelper>
+      
+      <OrbitControls
+        // maxAzimuthAngle={1}
+        // minPolarAngle={1}
+        // maxPolarAngle={2}
+       />
 {/*       
       <Html occlude="blending"  transform distanceFactor={.9} rotation={[0,-Math.PI/2,0]}  
         position={[-.509,-0.05,0]}
