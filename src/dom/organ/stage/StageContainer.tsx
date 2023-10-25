@@ -10,13 +10,14 @@ import SceneConfig from "@/model/level/SceneConfig";
 import useSyncedUnixTimer from "../../../../script/util/hook/useSyncedUnixTimer";
 import { useSearchParams } from "next/navigation";
 import { TradingViewChart } from '@/model/tools/charts/TradingViewChart'
-
+import CandleClickGame from '@/dom/organ/CandleClickGame'
 export default function StageContainer({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"
   const timeframe_search = searchParams.get('timeframe') || "1h"
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const [isBottomRightOpen, s__isBottomRightOpen] = useState(false)
   // useEffect(()=>{
   //   if(!!points) return
   //   triggerGetPrices()
@@ -83,7 +84,12 @@ export default function StageContainer({children}:{children:ReactNode}) {
   return (
     <div className="flex-col tx-altfont-4  ">
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 right-0" >
+        {/* <div className="tx-white">
+          <CandleClickGame />
+        </div> */}
+        <div className="flex-col-r flex-justify-center flex-align-center">
 
+        {isBottomRightOpen &&
         <div className=" pa-2  flex-col bg-w-50 bord-r-25 ">
           {!!lastPrices?.spotPrice &&
         <div className="flex-col gap-2 tx-md mb-4">
@@ -111,17 +117,28 @@ export default function StageContainer({children}:{children:ReactNode}) {
                 <div>{ LS_maxScore }</div>
               </div>
             </>}
-          <div className="opaci-chov--50">
-            <button className="tx-xl pointer tx-altfont-1 bord-r-10 px-3" onClick={triggerStart}>
-              <div className="Q_xs ">{points == 0 ? `+` : `+`}</div>
-              <div className="Q_sm_x">{points == 0 ? `Start` : `+`}</div>
-            </button>
-          </div>
+            {points == 0 &&
+            <div className="opaci-chov--50">
+              <button className="tx-xl pointer tx-altfont-1 bord-r-10 px-3" onClick={triggerStart}>
+                <div className="Q_xs ">{points == 0 ? `+` : `+`}</div>
+                <div className="Q_sm_x">{points == 0 ? `Start` : `+`}</div>
+              </button>
+            </div>
+          }
           {children}
         </div>
+          }
+          <div onClick={()=>{s__isBottomRightOpen(true)}} className="tx-white opaci-chov--50 pointer tx-right w-100">Details</div>
+        </div>
+        {isBottomRightOpen &&
+          <div className="pt-4 tx-right">
+            <div onClick={()=>{s__isBottomRightOpen(false)}} className="tx-white opaci-chov--50">Close</div>
+          </div>
+          }
       </div>
 
-      <Canvas style={{width:"100vw",height:"100vh"}} shadows camera={{fov:40,position:[isSmallDevice?5:3,0,0]}}
+      <Canvas style={{width:"100vw",height:"100vh"}} shadows 
+      camera={{fov:40,position:[isSmallDevice?5:3,0,-1]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
       
@@ -153,11 +170,15 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
         </Html> */}
 
-      <SceneConfig  sceneCalls={{setTimerChartLoading}} />
+      <group rotation={[0,0,0]}>
+      <SceneEnv />
+      <group position={[0,0,0]}>
+        <SceneConfig sceneState={sceneState} sceneCalls={{setTimerChartLoading}} />
+        </group>
       <SceneWrapper sceneState={sceneState} sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
         s__startRotationTime, s__shorttermList, s__isChartLoading}} />
-      <SceneEnv />
+        </group>
     </Canvas>
     </div>
   )

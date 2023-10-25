@@ -14,10 +14,27 @@ export default function SceneConfig({sceneState, sceneCalls}: any) {
   return (<>
   <group >
     
-  <Box args={[0.2,0.2,0.2]} position={[-0.3,.4,-.7]} onClick={sceneCalls.setTimerChartLoading}>
-          <meshStandardMaterial color="#ff9900" />
+      <Box args={[0.2,0.2,0.2]} position={[-0.25,.65,sceneState.isChartLoading ? -0.61 : -.7]}
+        onClick={sceneCalls.setTimerChartLoading}
+      >
+          <meshStandardMaterial color="#ff9900" emissive={sceneState.isChartLoading ? "#996600" : "#000"} />
       </Box>
-        </group>
+      <Cylinder args={[0.1,0.1,6.2]} position={[-0.25,-4,0]}>
+        <meshStandardMaterial color="#999999" />
+
+      </Cylinder>
+      
+      <Cylinder args={[0.15,0.15,0.2]} position={[-0.25,.3,-0.75]} rotation={[Math.PI/2,0,0]}>
+        <meshStandardMaterial color="#009900" />
+
+      </Cylinder>
+
+      {sceneState.isChartLoading &&
+    <pointLight castShadow args={[0xff9900, 1, 1.5]} position={[-0.5, .75, -2]}  />
+  }
+
+      
+      </group>
 
   </>)
 }

@@ -5,7 +5,8 @@ export default function Home() {
   
 
   return (
-    <main>
+    <main className="mainbackground "
+    >
       {/* <div className="flex-col">
         <h1>pov: hello web</h1>
       </div> */}

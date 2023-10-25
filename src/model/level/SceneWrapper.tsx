@@ -9,6 +9,7 @@ import SyncedClock from "../npc/SyncedClock";
 import LoadingBar from "../npc/LoadingBar";
 import CandleKLineChart from "@/model/tools/charts/CandleKLineChart"
 import CloseupCandleKLineChart from "@/model/tools/charts/CloseupCandleKLineChart"
+import SlowCandleKLine from "@/model/tools/charts/SlowCandleKLine"
 
 
 export default function SceneWrapper({sceneState, sceneCalls}: any) {
@@ -40,7 +41,7 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
   //   }, 2000);
   // },[sceneState.isChartLoading, sceneCalls.s__fullfuttermList])
   return (<>
-    <group position={[0.0, 0.8, 0]} >
+    <group position={[0.0, 0.875, 0]} >
       <LoadingBar state={{startRotationTime:sceneState.startRotationTime,points:sceneState.points}} calls={{s__startRotationTime:sceneCalls.s__startRotationTime}}>
   
     </LoadingBar>
@@ -56,36 +57,54 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
     <meshStandardMaterial color="lightgrey" />    
 
     </RoundedBox>
-  <Box args={[0.5,.8,1.36]} position={[-0.242,0.37,0]} castShadow receiveShadow>
+  <Box args={[0.5,.88,1.36]} position={[-0.242,0.44,0]} castShadow receiveShadow>
     <meshStandardMaterial color="grey" transparent={true} opacity={.5} />    
 
     </Box>
-  {!sceneState.isChartLoading && showFutures && !!sceneState.fullfuttermList && sceneState.fullfuttermList.length > 0 &&
-        <group position={[0.0, -0.75, 0.5]} rotation={[0, Math.PI / 2, 0]} onClick={triggerToggleShortCube}>
+  <Box args={[0.49,.7,1.355]} position={[-0.242,0.44,0]} castShadow receiveShadow>
+    <meshStandardMaterial color="grey"  />    
+
+    </Box>
+    <Box args={[.001,.9,1.1]} position={[0,-0.475,0]}>
+      <meshStandardMaterial color={"#222222"} />
+    </Box>
+  {showFutures && !!sceneState.fullfuttermList && sceneState.fullfuttermList.length > 0 &&
+        <group position={[0.01, -0.75, 0.5]} rotation={[0, Math.PI / 2, 0]} >
          
-         <group position={[0,0.2,0]}>
+          {!sceneState.isChartLoading && 
+         <group position={[0,0.15,0]}>
          <CandleKLineChart cubeSize={shorttermCubeSize} closingContextPrices={sceneState.shorttermList} 
               yRange={[0,0.5]}
               chopStart={futChopAmount}
             fullArray={sceneState.fullfuttermList} 
           />
           </group>
+}
   {!!sceneState.fullmidtermList && sceneState.fullmidtermList.length > 0 &&
           <group position={[0,-0.15,0]}>
          <CandleKLineChart cubeSize={midtermCubeSize} closingContextPrices={sceneState.midtermList} 
-              yRange={[0,0.5]}
+              yRange={[0,0.4]}
               chopStart={futChopAmount}
             fullArray={sceneState.fullmidtermList} 
           />
           </group>
 }
-          <group position={[-18.85,.9,0]}>
+          {/* <group position={[-18.85,.9,0]}>
             <CloseupCandleKLineChart cubeSize={.08} closingContextPrices={lastOf} 
               yRange={[0,0.6]}
               chopStart={500-32}
               fullArray={sceneState.fullfuttermList} 
             />
-          </group>
+          </group> */}
+          {!sceneState.isChartLoading && 
+            <group position={[1.15,.9 ,0]}>
+              <SlowCandleKLine cubeSize={.04} closingContextPrices={lastOf} 
+                yRange={[0,0.6]}
+                chopStart={500-32}
+                fullArray={sceneState.fullfuttermList} 
+              />
+            </group>
+            }
         </group>
       }
 

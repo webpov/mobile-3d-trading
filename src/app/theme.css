@@ -12,3 +12,8 @@
 .tx-altfont-3 { font-family: 'Gajraj One', cursive !important}
 .tx-altfont-4 {     font-family: 'Marko One', serif !important}
 .tx-altfont-5 {     font-family: 'Lobster', serif !important}
+
+.mainbackground {
+    background: linear-gradient(135deg, #302F2E, #8C8B87);
+
+}

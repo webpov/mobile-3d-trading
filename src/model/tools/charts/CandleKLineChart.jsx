@@ -68,12 +68,12 @@ export function CandleKLineChart({
       // const previousClose = i > 0 ? fullArray[i - 1][4] : currentClose;
     
       // const bodyColor = currentClose >= previousClose ? new THREE.Color(0xffaa33) : new THREE.Color(0x0099ff);
-      const wickColor = currentClose < previousClose ? new THREE.Color(0x990000) : new THREE.Color(0x009900);
+      const wickColor = currentClose < previousClose ? new THREE.Color(0xff0000) : new THREE.Color(0x00ff00);
     
       // refCandles.current.setColorAt(i, bodyColor);
       refCandles.current.setColorAt(i + count, wickColor);
-    }
-    
+  }
+
     refCandles.current.instanceMatrix.needsUpdate = true;
 
     // Set the buffer attribute with the colors
@@ -81,6 +81,11 @@ export function CandleKLineChart({
       "color",
       new THREE.InstancedBufferAttribute(colors, 3)
     );
+    refCandles.current.geometry.setAttribute(
+      "emissive",
+      new THREE.InstancedBufferAttribute(colors, 3)
+    );
+    
   }, [fullArray, yRange, closingContextPrices, chopStart]);
 
   return (<>
@@ -88,7 +93,7 @@ export function CandleKLineChart({
     <group position={[0, 0, 0]} visible={!!fullArray.length}>
       <instancedMesh ref={refCandles} args={[null, null, count * 2]}>
         <boxBufferGeometry />
-        <meshStandardMaterial vertexColors={vertexColorsRefresher} />
+        <meshStandardMaterial emissive={0x000000} emissiveIntensity={1} vertexColors={vertexColorsRefresher} />
       </instancedMesh>
     </group>
     </>);

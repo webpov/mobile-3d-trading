@@ -24,11 +24,12 @@ export default function useSyncedUnixTimer({state,calls}:any) {
         // Change the last position's "futurePrice" with the value from currentData
         // console.log(`last price ${newArray[newArray.length - 1][4]} new price ${parseFloat(currentData.futurePrice)}`)
         const diff = Math.abs(newArray[newArray.length - 1][4] - parseFloat(currentData.futurePrice))
-        console.log("next", newArray[newArray.length - 1][0] + 60000)
+        // console.log("next", newArray[newArray.length - 1][0] + 60000)
         const timeDiff = startRotationTime + 60000 - Date.now() 
-        console.log("timeDiff", timeDiff)
-        if (diff > 10 || timeDiff < 0) {
-          console.log("timeDiff < 0",)
+        // console.log("timeDiff", timeDiff)
+        const diffPercent = diff / currentData.futurePrice * 100
+        console.log("Diff percent %", diff, diffPercent)
+        if (diffPercent > 0.07 || timeDiff < 0) {
           s__startRotationTime(startRotationTime + 60000)
           await initFuturesTimeframe()
           setTimerChartLoading()
@@ -48,7 +49,7 @@ export default function useSyncedUnixTimer({state,calls}:any) {
       s__isChartLoading(true)
       setTimeout(()=>{
         s__isChartLoading(false)
-      },1500)
+      },500)
     }
 
     const fetchProperUnix = async () => {
@@ -73,7 +74,7 @@ export default function useSyncedUnixTimer({state,calls}:any) {
       }
       
       // setTimerChartLoading()
-      console.log("asd",startRotationTime)
+      // console.log("asd",startRotationTime)
       let timeoutId:any = null;
     
       const repeatAction = () => {

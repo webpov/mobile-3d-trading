@@ -36,12 +36,12 @@ export default function PendulumClock({calls, state}:any) {
         <meshStandardMaterial color="black" />    
       </Cylinder> */}
       
-      <Box args={[0.005,0.01,1]} position={[0,0.04,0]}>
+      <Box args={[0.005,0.01,1]} position={[0,0.04,0]} rotation={[0,0,1]}>
       <meshStandardMaterial color="lightgrey" />    
 
       </Box>
     <group  ref={$cyl} position={[0,0.01,.5]}>
-      <Box args={[0.01,0.07,0.05]} position={[0,0.03,0]}>
+      <Box args={[0.01,0.05,0.05]} position={[0,0.03,0]}>
       <meshStandardMaterial color="grey" />    
 
       </Box>

@@ -2,7 +2,7 @@ import { Box } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-export function CandleKLineChart({
+export function CloseupCandleKLineChart({
   chopStart = 490,
   count = 500,
   temp = new THREE.Object3D(),
@@ -15,17 +15,14 @@ export function CandleKLineChart({
   const refCandles = useRef(null);
   const [vertexColorsRefresher, s__vertexColorsRefresher] = useState(false);
 
+  
   useEffect(() => {
-    const distanceBetweenCandles = cubeSize * 3; // Additional space for wicks
+    const distanceBetweenCandles = cubeSize * 3; 
     const yRangeSize = yRange[1] - yRange[0];
-    // const maxValue = Math.max(...fullArray.map((candle) => candle[2]));
-    // const minValue = Math.min(...fullArray.map((candle) => candle[3]));
-    // const minValue = minMaxValue[0]
-    // const maxValue = minMaxValue[1]
     const minValue =  Math.min(...closingContextPrices)
     const maxValue =  Math.max(...closingContextPrices)
 
-    let colors = new Float32Array(count * 3); // Create colors array dynamically
+    let colors = new Float32Array(count * 3); 
     
     for (let i = chopStart; i < count; i++) {
       const scaleValues = [
@@ -40,51 +37,34 @@ export function CandleKLineChart({
           (maxValue - minValue) +
         yRange[0];
     
-      // Create and position the candlestick body
-      // const bodyHeight =
-      //   ((fullArray[i][4] - fullArray[i][1]) /
-      //     (maxValue - minValue)) *
-      //   yRangeSize;
-      // const bodyY = y + bodyHeight / 2;
-      // temp.scale.set(cubeSize * scaleSize[0] / 3, bodyHeight, cubeSize * scaleSize[1] * 2);
-      // temp.position.set(x / 3, bodyY, 0);
-      // temp.updateMatrix();
-      // refCandles.current.setMatrixAt(i, temp.matrix);
-    
-      // Create and position the wick
-      const wickHeight =
+      const candleBodyHeight =
         ((fullArray[i][2] - fullArray[i][3]) /
           (maxValue - minValue)) *
         yRangeSize;
-      const wickY = y + wickHeight / 2;
-      temp.scale.set(cubeSize * scaleSize[0] / 3, wickHeight, cubeSize * scaleSize[1]/2 * (i == 499 ? 10 : 1));
-      temp.position.set(x / 3, wickY, 0);
+      const candleY = y + candleBodyHeight / 2;
+      temp.scale.set(cubeSize * scaleSize[0] / 3, candleBodyHeight, cubeSize * scaleSize[1]/2 * (i == 499 ? 10 : 1));
+      temp.position.set(x / 3, candleY, 0);
       temp.updateMatrix();
       refCandles.current.setMatrixAt(i + count, temp.matrix);
     
-      // Determine body and wick colors based on whether it closed higher or lower
       const currentClose = fullArray[i][4];
       const previousClose = fullArray[i][1];
-      // const previousClose = i > 0 ? fullArray[i - 1][4] : currentClose;
     
-      // const bodyColor = currentClose >= previousClose ? new THREE.Color(0xffaa33) : new THREE.Color(0x0099ff);
-      const wickColor = currentClose < previousClose ? new THREE.Color(0x990000) : new THREE.Color(0x009900);
+      const candleColor = currentClose < previousClose ? new THREE.Color(0x990000) : new THREE.Color(0x009900);
     
-      // refCandles.current.setColorAt(i, bodyColor);
-      refCandles.current.setColorAt(i + count, wickColor);
+      refCandles.current.setColorAt(i + count, candleColor);
     }
-    
     refCandles.current.instanceMatrix.needsUpdate = true;
 
-    // Set the buffer attribute with the colors
     refCandles.current.geometry.setAttribute(
       "color",
       new THREE.InstancedBufferAttribute(colors, 3)
     );
-  }, [fullArray, yRange, closingContextPrices, chopStart]);
+  }, [fullArray, closingContextPrices, chopStart]);
+
+  
 
   return (<>
-  {/* <Box></Box> */}
     <group position={[0, 0, 0]} visible={!!fullArray.length}>
       <instancedMesh ref={refCandles} args={[null, null, count * 2]} castShadow receiveShadow>
         <boxBufferGeometry />
@@ -94,4 +74,4 @@ export function CandleKLineChart({
     </>);
 }
 
-export default CandleKLineChart;
+export default CloseupCandleKLineChart;
