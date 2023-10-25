@@ -26,11 +26,14 @@ export default function StageContainer({children}:{children:ReactNode}) {
   const dateNow = Date.now()
   const {
     lastPrices,
+    isBuyOrderLoading, s__isBuyOrderLoading,
     isChartLoading, s__isChartLoading,
     points, s__points,
     startRotationTime, s__startRotationTime,
     shorttermList, s__shorttermList,
     fullfuttermList, s__fullfuttermList,
+    trigger__isBuyOrderLoading,
+    buyScore, s__buyScore,
     setTimerChartLoading,
     initFuturesTimeframe,
     midtermList, s__midtermList,
@@ -50,14 +53,16 @@ export default function StageContainer({children}:{children:ReactNode}) {
   const sceneState = useMemo(()=>{
     return {
       points,
+      buyScore,
       startRotationTime,
       isChartLoading: isChartLoading,
+      isBuyOrderLoading: isBuyOrderLoading,
       fullfuttermList, 
       shorttermList,
       midtermList,
       fullmidtermList,
     }
-  },[points, startRotationTime, isChartLoading]);
+  },[points, startRotationTime, isChartLoading, isBuyOrderLoading]);
 
   const [mounted, s__Mounted] = useState(false);
   const [LS_maxScore, s__LS_maxScore] = useLocalStorage("scoreboard",0)
@@ -83,6 +88,25 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
+      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs top-0 mb-8 left-0" >
+        {!!buyScore && <>
+          <div className="flex gap-1 pa-2 flex-justify-start" >
+          <div className="tx-lx" >
+          💰
+          </div>
+          <div className="tx-xl tx-white" >
+            {buyScore}
+          </div>
+          </div>
+          </>}
+        {!buyScore && <>
+          <div className="flex gap-1 pa-2 flex-justify-start" >
+          <div className="tx-lx tx-white flex-center" >
+          💰 <div className="tx-red opaci-50 tx-xxxl pos-abs">X</div>
+          </div>
+          </div>
+          </>}
+      </div>
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 right-0" >
         {/* <div className="tx-white">
           <CandleClickGame />
@@ -100,6 +124,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
         
           <div className="">
             {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
+          </div>
+          <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+            <div className="Q_xs">*</div>
+            <div className="Q_sm_x">:</div>
+            <div>{ buyScore }</div>
           </div>
           <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
             <div className="Q_xs">⭐</div>
@@ -138,7 +167,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
       </div>
 
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:40,position:[isSmallDevice?5:3,0,-1]}}
+      camera={{fov:40,position:[isSmallDevice?5:3,0,-2]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
       
@@ -173,9 +202,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
       <group rotation={[0,0,0]}>
       <SceneEnv />
       <group position={[0,0,0]}>
-        <SceneConfig sceneState={sceneState} sceneCalls={{setTimerChartLoading}} />
+        <SceneConfig sceneState={sceneState} 
+          sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
         </group>
-      <SceneWrapper sceneState={sceneState} sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
+      <SceneWrapper sceneState={sceneState} 
+        sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
         s__startRotationTime, s__shorttermList, s__isChartLoading}} />
         </group>

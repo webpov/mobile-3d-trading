@@ -4,8 +4,10 @@ import { getCurrentPrices, getFuturesPricesList, getPricesList, getRelevantChart
 export default function useSyncedUnixTimer({state,calls}:any) {
     const [startRotationTime, s__startRotationTime] = useState(0); 
     const [points, s__points] = useState(0)
+    const [buyScore, s__buyScore] = useState(10)
     const [lastPrices, s__lastPrices] = useState<any>()
   const [isChartLoading, s__isChartLoading] = useState(true)
+  const [isBuyOrderLoading, s__isBuyOrderLoading] = useState(false)
     
     const [fullmidtermList, s__fullmidtermList] = useState<any>([])
     const [fullfuttermList, s__fullfuttermList] = useState<any>([])
@@ -90,7 +92,23 @@ export default function useSyncedUnixTimer({state,calls}:any) {
         clearTimeout(timeoutId);
       };
     }, [points, startRotationTime, delayMsecs]);
-  
+    const trigger__isBuyOrderLoading = () => {
+      
+      if (!buyScore ) {
+        return
+      }
+      if (points == 0) return
+      if (isBuyOrderLoading) return
+      s__isBuyOrderLoading(true)
+      setTimeout(()=>{
+        s__isBuyOrderLoading(false)
+        if (points == 0) {
+          return
+        }
+
+        s__buyScore(buyScore-1)
+      },1500)
+    }
     const initFuturesTimeframe = async () => {
       let futTermPricesList = await getFuturesPricesList("1m", state.symbol)
       s__fullfuttermList(futTermPricesList)
@@ -103,9 +121,12 @@ export default function useSyncedUnixTimer({state,calls}:any) {
       s__isChartLoading(false)
     }
     return {
+      buyScore, s__buyScore,
       initFuturesTimeframe,
       setTimerChartLoading,
       midtermList, s__midtermList,
+      isBuyOrderLoading, s__isBuyOrderLoading,
+      trigger__isBuyOrderLoading,
       isChartLoading, s__isChartLoading,
       fullmidtermList, s__fullmidtermList,
       fullfuttermList, s__fullfuttermList,

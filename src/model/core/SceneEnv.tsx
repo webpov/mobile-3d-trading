@@ -13,7 +13,6 @@ export function SceneEnv({pageState}:any) {
     </Sphere>
       <ambientLight intensity={0.035} />
       <spotLight castShadow args={[0xfffaf6, .2, 40]} position={[9, 9, 5]} />     
-      <spotLight castShadow args={[0xfffaf6, 1, 22, .06, 1]} position={[9, 9, -5]} />     
 
 
   </>)

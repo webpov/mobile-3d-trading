@@ -83,7 +83,7 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
   {!!sceneState.fullmidtermList && sceneState.fullmidtermList.length > 0 &&
           <group position={[0,-0.15,0]}>
          <CandleKLineChart cubeSize={midtermCubeSize} closingContextPrices={sceneState.midtermList} 
-              yRange={[0,0.4]}
+              yRange={[0,0.3]}
               chopStart={futChopAmount}
             fullArray={sceneState.fullmidtermList} 
           />
