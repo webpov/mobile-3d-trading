@@ -1,13 +1,13 @@
 "use client"
 import { SceneEnv } from "@/model/core/SceneEnv";
-import { Box, Cylinder, OrbitControls, Plane, Ring, RoundedBox, useTexture } from "@react-three/drei";
+import { Box, Cylinder, OrbitControls, Plane, Ring, RoundedBox, Sphere, useTexture } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { ReactNode, useRef, Suspense, useEffect, useState, useMemo } from "react"
 import { useLocalStorage } from "usehooks-ts"
 import { getFuturesPricesList, getCurrentPrices, getPricesList, getRelevantChartData } from '@/../script/util/helper/kline'
 import CandleKLineChart from "@/model/tools/charts/CandleKLineChart"
 import CloseupCandleKLineChart from "@/model/tools/charts/CloseupCandleKLineChart"
-
+import SimCardSlot from "@/model/mix/SimCardSlot"
 
 export default function SceneConfig({sceneState, sceneCalls}: any) {
   const lastCylinderRef:any = useRef();
@@ -20,7 +20,11 @@ export default function SceneConfig({sceneState, sceneCalls}: any) {
 
   return (<>
   <group >
-    
+
+  <group position={[-0.25,1,0.5]} >
+    <SimCardSlot sceneState={sceneState} />
+  </group >
+  
       <Box args={[0.2,0.2,0.2]} position={[-0.25,.65,sceneState.isChartLoading ? -0.64 : -.7]} castShadow
         onClick={sceneCalls.setTimerChartLoading}
       >

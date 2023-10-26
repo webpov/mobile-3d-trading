@@ -92,7 +92,8 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
-    <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0" >
+    <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
+    onClick={()=>alert("Funds: "+sceneState.buyScore)}>
       {!!buyScore && <>
         <div className="flex gap-1 pa-2 flex-justify-start" >
         <div className="tx-lx" >
@@ -116,6 +117,12 @@ export default function StageContainer({children}:{children:ReactNode}) {
           <div className="flex gap-3 pa-2 flex-justify-center flex-align-center" >
           {isTopRightOpen && <>
           <div className="flex-row gap-3 Q_xs_sm_flex-col">
+            
+          <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50 Q_xs">
+            <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
+            <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webpovlogo.jpg" width={64} height={64} />
+            </div>
+            </Link>
               <Link href={"https://webqub.vercel.app/"} className=" opaci-chov--50">
             <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
             <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webqublogo.jpg" width={48} height={48} />
@@ -132,7 +139,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
             </div>
             </Link>
             </div>
-              <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50">
+              <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50 Q_sm_x">
             <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
             <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webpovlogo.jpg" width={64} height={64} />
             </div>
@@ -147,13 +154,13 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
           </div>
           </>}
-        {!buyScore && <>
+        {/* {!buyScore && <>
           <div className="flex gap-1 pa-2 flex-justify-start" >
           <div className="tx-lx tx-white flex-center" >
           💰 <div className="tx-red opaci-50 tx-xxxl pos-abs">X</div>
           </div>
           </div>
-          </>}
+          </>} */}
       </div>
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 pb-8 right-0" >
         {/* <div className="tx-white">
@@ -162,27 +169,35 @@ export default function StageContainer({children}:{children:ReactNode}) {
         <div className="flex-col-r flex-justify-center flex-align-center">
 
         {isBottomRightOpen &&
-        <div className=" pa-2  flex-col bg-w-90 bord-r-25 ">
+        <div className=" pa-2  flex-col bg-w-20 bg-glass-10 bord-r-25 ">
           {!!lastPrices?.spotPrice &&
         <div className="flex-col gap-2 tx-md mb-4">
-            <div>s:{!lastPrices?.spotPrice ? "..." : parseInt(lastPrices?.spotPrice)}</div>
-            <div className="opaci-50">f:{!lastPrices?.futurePrice ? "..." : parseInt(lastPrices?.futurePrice)}</div>
+            <div>s: {!lastPrices?.spotPrice ? "..." : parseFloat(lastPrices?.spotPrice)}</div>
+            <div className="opaci-50">
+              f: {!lastPrices?.futurePrice ? "..." : parseFloat(lastPrices?.futurePrice)}</div>
           </div>
           }
         
-          <div className="">
-            Delay: {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
+          <div className="flex-col py-1">
+            <div className="Q_sm_x">Delay</div>
+            <div className="flex-center">
+              <div className="Q_xs tx-lg">🕒</div>
+              {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
+            </div>
           </div>
-          <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
-            <div className="Q_xs">*</div>
-            <div className="Q_sm_x">Tickets:</div>
-            <div>{ buyScore }</div>
-          </div>
-          <div className={`flex gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+          <div className={`flex gap-1 py-1 tx-lg   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
             <div className="Q_xs">⭐</div>
             <div className="Q_sm_x">Level:</div>
             <div>{ points }</div>
           </div>
+          
+          <div onClick={()=>alert("Funds: "+sceneState.buyScore)} 
+          className={`tx-lg bg-black box-shadow-5-b bord-r-10 pa-2 tx-white flex opaci-chov--50 gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+            <div className="Q_xs">💰</div>
+            <div className="Q_sm_x">Funds:</div>
+            <div>{ buyScore }</div>
+          </div>
+
             {/* {typeof window !== 'undefined'  && <>
               <div className="Q_md_x flex gap-1 opaci-50 tx-lg">
                 <div>Goal:</div>
@@ -195,10 +210,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
               </div>
             </>} */}
             {points == 0 &&
-            <div className="opaci-chov--50">
-              <button className="tx-xl pointer tx-altfont-1 bord-r-10 px-3" onClick={triggerStart}>
-                <div className="Q_xs ">{points == 0 ? `+` : `+`}</div>
-                <div className="Q_sm_x">{points == 0 ? `Start` : `+`}</div>
+            <div className="opaci-chov--50 ">
+              <button className=" pointer py-3 translate-y-50 tx-altfont-1 bord-r-10 flex-center px-3"
+               onClick={triggerStart}>
+                <div className="pos-abs tx-lgx Q_xs ">{points == 0 ? `►` : `+`}</div>
+                <div className="pos-abs tx-xl Q_sm_x">{points == 0 ? `Start` : `+`}</div>
               </button>
             </div>
           }
