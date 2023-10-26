@@ -32,5 +32,5 @@ const SimCardSlot = forwardRef((props:any, ref) => {
     </>
   );
 });
-
+SimCardSlot.displayName = "SimCardSlot"
 export default SimCardSlot;
