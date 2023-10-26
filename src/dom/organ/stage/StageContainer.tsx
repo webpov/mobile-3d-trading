@@ -18,6 +18,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"
   const timeframe_search = searchParams.get('timeframe') || "1h"
+  const autoRotate = searchParams.has('rotate') || false
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const [isBottomRightOpen, s__isBottomRightOpen] = useState(false)
   const [isTopRightOpen, s__isTopRightOpen] = useState(false)
@@ -224,7 +225,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
       gl={{ preserveDrawingBuffer: true, }}
     >
       
-<GizmoHelper  alignment="bottom-left" margin={[50, 50]} >
+<GizmoHelper   alignment="bottom-left" margin={[50, 50]} >
         <GizmoViewcube
           
           color="gray"
@@ -240,9 +241,9 @@ export default function StageContainer({children}:{children:ReactNode}) {
       
       <OrbitControls
         rotateSpeed={2}
-        autoRotateSpeed={.05}
-        autoRotate={true}
-        dampingFactor={.05}
+        autoRotateSpeed={.075}
+        autoRotate={autoRotate}
+        dampingFactor={.2}
         // maxAzimuthAngle={1}
         // minPolarAngle={1}
         // maxPolarAngle={2}
