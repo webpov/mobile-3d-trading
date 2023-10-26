@@ -80,7 +80,7 @@ export function CloseupCandleKLineChart({
           return (<group key={index}>
             <group position={[index*cubeSize - (count * cubeSize) || 0,0,0]}>
               <group position={[0,0,0]}>
-                <Box args={[cubeSize,candleArray[index] || 0,cubeSize]} castShadow 
+                <Box args={[cubeSize,candleArray[index] || 0,cubeSize]} castShadow receiveShadow 
                   position={[0,posArray[index] || 0,0]}>
                     <meshStandardMaterial color={colorArray[index]}
                       emissiveIntensity={0.75} emissive={colorArray[index]} />
@@ -88,9 +88,9 @@ export function CloseupCandleKLineChart({
               </group>
             </group>
             <group position={[(index*cubeSize - (count * cubeSize))  || 0,0,0]}>
-              <Box args={[cubeSize/3,candleArray[index]*2 || 0,cubeSize/3]} castShadow 
+              <Box args={[cubeSize/3,candleArray[index]*2 || 0,cubeSize/3]} castShadow receiveShadow 
                 position={[0,posArray[index] || 0,0]}>
-                  <meshStandardMaterial color={colorArray[index]} emissiveIntensity={0.5} emissive={colorArray[index]} />
+                  <meshStandardMaterial color={colorArray[index]} emissiveIntensity={0.25} emissive={colorArray[index]} />
               </Box>
             </group>
 

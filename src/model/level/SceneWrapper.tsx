@@ -72,9 +72,9 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
         <group position={[0.01, -0.75, 0.5]} rotation={[0, Math.PI / 2, 0]} >
          
           {!sceneState.isChartLoading && 
-         <group position={[0,0.15,0]}>
+         <group position={[0,0.25,0]}>
          <CandleKLineChart cubeSize={shorttermCubeSize} closingContextPrices={sceneState.shorttermList} 
-              yRange={[0,0.5]}
+              yRange={[0,0.45]}
               chopStart={futChopAmount}
             fullArray={sceneState.fullfuttermList} 
           />
