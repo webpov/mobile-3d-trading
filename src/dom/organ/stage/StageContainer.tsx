@@ -311,11 +311,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
         <meshStandardMaterial side={2} color={"white"} />
         </Plane>
         } */}
-
+ {LS_logsCout > 2 &&
         <group position={[0,.8,0]}>
           <ResetLocalStorageRedCube />
         </group>
-
+}
 
 
       <ToggleSwitch sceneState={sceneState} scale={3}
