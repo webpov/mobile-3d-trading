@@ -102,7 +102,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
-      {LS_logsCout > 3 &&
+      {LS_logsCout > 2 &&
     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
     onClick={()=>alert("Funds: "+sceneState.buyScore)}>
       {!!buyScore && <>
@@ -125,7 +125,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
     </div>
     }
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
-             {LS_logsCout > 3 &&
+             {LS_logsCout > 2 &&
 <>
           <div className="flex gap-3 pa-2 flex-justify-center flex-align-center" >
           {isTopRightOpen && <>
@@ -175,7 +175,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
           </>} */}
       </div>
-      {LS_logsCout > 3 &&
+      {LS_logsCout > 2 &&
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 pb-8 right-0" >
         {/* <div className="tx-white">
           <CandleClickGame />
@@ -251,7 +251,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
       </div>
 }
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:40,position:[isSmallDevice?5:3,0,LS_logsCout > 3 ? -2 : -0.5]}}
+      camera={{fov:40,position:[isSmallDevice?5:3,0,LS_logsCout > 2 ? -2 : -0.5]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
       
@@ -290,13 +290,13 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
       <group rotation={[0,0,0]}>
 
-      {LS_logsCout > 3 && <SceneEnv /> }
-      {LS_logsCout > 3 && <group position={[0,0,0]}>
+      {LS_logsCout > 2 && <SceneEnv /> }
+      {LS_logsCout > 2 && <group position={[0,0,0]}>
         <SceneConfig sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
         </group> }
         
-      {LS_logsCout > 3 && <group position={[.18,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
+      {LS_logsCout > 2 && <group position={[.18,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
         <CallToAction sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
         </group> }
@@ -323,7 +323,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
         </ToggleSwitch>
       </group>
       
-      {LS_logsCout > 3 && <SceneWrapper sceneState={sceneState} 
+      {LS_logsCout > 2 && <SceneWrapper sceneState={sceneState} 
         sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
         s__startRotationTime, s__shorttermList, s__isChartLoading}} /> }
