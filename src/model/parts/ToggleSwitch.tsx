@@ -50,7 +50,7 @@ export default function ToggleSwitch({sceneState, sceneCalls, callbacks, config,
           <meshStandardMaterial color="#bbbbbb" />
       </Box>
 
-      <spotLight castShadow intensity={currentState ? 1 : 0.2} args={[0xfffaf6, .2, 40]} position={[2, 2, -2]} />
+      <spotLight castShadow intensity={currentState ? 1 : 0.2} args={[0xfffaf6, .2, 40]} position={[3, 3, -3]} />
 
   </group >
   </>)

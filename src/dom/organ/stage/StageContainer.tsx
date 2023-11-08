@@ -297,7 +297,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
         </group> }
         
-      {LS_logsCout > 2 && <group position={[.18,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
+      {LS_logsCout > 2 && <group position={[.25,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
         <CallToAction sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
         </group> }
@@ -312,7 +312,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
         </Plane>
         } */}
 
-        <group position={[0,6,0]}>
+        <group position={[0,.8,0]}>
           <ResetLocalStorageRedCube />
         </group>
 

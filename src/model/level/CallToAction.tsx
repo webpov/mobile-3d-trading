@@ -24,19 +24,20 @@ export default function CallToAction({sceneState, sceneCalls}: any) {
 
   
       {sceneState.buyScore &&
-      <Cylinder args={[0.15,0.15,0.15,5]} position={[0,.0,sceneState.isBuyOrderLoading?-.0:-0.15]} 
+      <Cylinder args={[0.15,0.15,0.15,5]} position={[0,.0,sceneState.isBuyOrderLoading?-.25:-0.2]} 
                 ref={lastCylinderRef}
 
       rotation={[Math.PI/2,0,0]} 
         onClick={sceneCalls.trigger__isBuyOrderLoading}
         castShadow
       >
-        <meshStandardMaterial color={sceneState.points?"#009900":"#999999"} emissiveIntensity={.1} emissive={sceneState.points?"#009900":"#000"} />
+        <meshStandardMaterial color={sceneState.points?"#006600":"#999999"} emissiveIntensity={.1} 
+        emissive={sceneState.isBuyOrderLoading?"#00ff00":"#000"} />
 
       </Cylinder>
     }
       {!sceneState.buyScore &&
-      <Cylinder args={[0.15,0.15,0.15,5]} position={[0,.0,-.0]} 
+      <Cylinder args={[0.15,0.15,0.15,5]} position={[0,.0,-.2]} 
 
       rotation={[Math.PI/2,0,0]} 
         onClick={()=>alert("no funds")}
@@ -47,7 +48,7 @@ export default function CallToAction({sceneState, sceneCalls}: any) {
       </Cylinder>
     }
       {sceneState.isBuyOrderLoading &&
-        <pointLight  args={[0x00ff00, .6, .33]} position={[0, .0, -.2]}  />
+        <pointLight  args={[0x00ff00, 1, .33]} position={[0, .0, -.2]}  />
       }
       
       </group>

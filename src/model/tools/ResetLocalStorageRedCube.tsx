@@ -26,7 +26,7 @@ export default function ResetLocalStorageRedCube({sceneState, sceneCalls,  ...pr
 
       
   <Box args={[0.1,0.1,0.1]} position={[0,0,0]} onClick={triggerResetEverything}>
-        <meshStandardMaterial emissive={"#f00"} />
+        <meshStandardMaterial emissive={"#900"} />
       </Box>
   </group >
   </>)
