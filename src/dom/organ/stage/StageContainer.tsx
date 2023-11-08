@@ -15,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ToggleSwitch from "@/model/parts/ToggleSwitch";
 import CallToAction from "@/model/level/CallToAction";
+import ResetLocalStorageRedCube from "@/model/tools/ResetLocalStorageRedCube";
 export default function StageContainer({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
@@ -102,7 +103,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
-      {LS_logsCout > 2 &&
+      {LS_logsCout > 1 &&
     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
     onClick={()=>alert("Funds: "+sceneState.buyScore)}>
       {!!buyScore && <>
@@ -124,11 +125,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
         </>}
     </div>
     }
-      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
+      <div className="z-600  pt-4 pr-4 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
              {LS_logsCout > 2 &&
 <>
           <div className="flex gap-3 pa-2 flex-justify-center flex-align-center" >
-          {isTopRightOpen && <>
+          { isTopRightOpen && <>
           <div className="flex-row gap-3 Q_xs_sm_flex-col">
             
           <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50 Q_xs">
@@ -161,8 +162,9 @@ export default function StageContainer({children}:{children:ReactNode}) {
           <div>
             
 
-            <button className="tx-xl nosat bg-trans noborder tx-shadow-5 opaci-chov--50" onClick={()=>{s__isTopRightOpen(!isTopRightOpen)}}>
-              ➕
+            <button className="tx-xl tx-white  pa-2 pb-3  nosat bg-trans noborder tx-shadow-5 opaci-chov--50" onClick={()=>{s__isTopRightOpen(!isTopRightOpen)}}>
+            
+            {!isTopRightOpen ? `🟰` : '✖️'}
             </button>
           </div>
           </div>
@@ -175,8 +177,8 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
           </>} */}
       </div>
-      {LS_logsCout > 2 &&
-      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 pb-8 right-0" >
+      {LS_logsCout > 1 &&
+      <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-100 pb-8 right-0" >
         {/* <div className="tx-white">
           <CandleClickGame />
         </div> */}
@@ -193,20 +195,20 @@ export default function StageContainer({children}:{children:ReactNode}) {
           }
         
           <div className="flex-col py-1">
-            <div className="Q_sm_x">Delay</div>
             <div className="flex-center">
-              <div className="Q_xs tx-lg">🕒</div>
-              {parseInt(`${(dateNow - startRotationTime) / 1000}`)}s
+              <div className=" tx-lg">🕒</div>
+              <div className=" tx-lg tx-white">{parseInt(`${(dateNow - startRotationTime) / 1000}`)}s</div>
+              
             </div>
           </div>
-          <div className={`flex gap-1 py-1 tx-lg   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+          {/* <div className={`flex gap-1 py-1 tx-lg   ${points >= LS_maxScore ? 'tx-red' : ''}`}>
             <div className="Q_xs">⭐</div>
             <div className="Q_sm_x">Level:</div>
             <div>{ points }</div>
-          </div>
+          </div> */}
           
           <div onClick={()=>alert("Funds: "+sceneState.buyScore)} 
-          className={`tx-lg bg-black box-shadow-5-b bord-r-10 pa-2 tx-white flex opaci-chov--50 gap-1   ${points >= LS_maxScore ? 'tx-green' : ''}`}>
+          className={`tx-lg bg-black box-shadow-5-b bord-r-10 pa-2 tx-white flex opaci-chov--50 gap-1   ${points >= LS_maxScore ? 'tx-orange' : ''}`}>
             <div className="Q_xs">💰</div>
             <div className="Q_sm_x">Funds:</div>
             <div>{ buyScore }</div>
@@ -227,8 +229,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
             <div className="opaci-chov--50 ">
               <button className=" pointer py-3 translate-y-50 tx-altfont-1 bord-r-10 flex-center px-3"
                onClick={triggerStart}>
-                <div className="pos-abs tx-lgx Q_xs ">{points == 0 ? `►` : `+`}</div>
-                <div className="pos-abs tx-xl Q_sm_x">{points == 0 ? `Start` : `+`}</div>
+                <div className="pos-abs tx-lgx  ">{points == 0 ? `►` : `+`}</div>
               </button>
             </div>
           }
@@ -237,15 +238,15 @@ export default function StageContainer({children}:{children:ReactNode}) {
           }
           {!isBottomRightOpen &&
           <div onClick={()=>{s__isBottomRightOpen(true)}} 
-          className="pt-6 tx-white opaci-chov--50 pointer tx-lg pr-4 tx-right w-100">
-            Settings
+          className="pt-6 tx-white opaci-chov--50 pointer tx-xl pr-4 tx-right w-100">
+            ⚙️
             </div>
             }
         </div>
         {isBottomRightOpen &&
           <div className="tx-right">
             <div onClick={()=>{s__isBottomRightOpen(false)}} 
-            className=" pt-6 pr-4 tx-lg tx-white opaci-chov--50">Close</div>
+            className=" pt-6 pr-4 tx-lx tx-white opaci-chov--50">✖️</div>
           </div>
           }
       </div>
@@ -305,14 +306,18 @@ export default function StageContainer({children}:{children:ReactNode}) {
       <group position={[-0.5,0,0]}
       rotation={[0,-Math.PI/2,0]}>
         
-        {!LS_logsCout  &&<>
-      <ambientLight intensity={0.035} />
-      </>}
       {/* {!LS_logsCout  &&
       <Plane args={[7,7]} rotation={[0,Math.PI,0]} castShadow receiveShadow>
         <meshStandardMaterial side={2} color={"white"} />
         </Plane>
         } */}
+
+        <group position={[0,6,0]}>
+          <ResetLocalStorageRedCube />
+        </group>
+
+
+
       <ToggleSwitch sceneState={sceneState} scale={3}
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}}
           config={{isConfirmationNeeded:false}}
