@@ -1,6 +1,6 @@
 "use client"
 import { SceneEnv } from "@/model/core/SceneEnv";
-import { Box, Cylinder, OrbitControls, Ring, RoundedBox, useTexture } from "@react-three/drei";
+import { Box, Cylinder, OrbitControls, Plane, Ring, RoundedBox, useTexture } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { ReactNode, useRef, Suspense, useEffect, useState, useMemo } from "react"
 import { useLocalStorage } from "usehooks-ts"
@@ -55,26 +55,6 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
   </SyncedClock>
   </group> */}
 
-  <group  onClick={stopPropagation}>
-    
-  <RoundedBox args={[0.5,2,1.35]} position={[-0.25,0,0]} castShadow receiveShadow>
-    <meshStandardMaterial color="lightgrey" />    
-
-    </RoundedBox>
-
-
-
-
-
-  <Box args={[0.5,.88,1.36]} position={[-0.242,-0.44,0]} castShadow receiveShadow>
-    <meshStandardMaterial color="grey" transparent={true} opacity={.5} />    
-
-    </Box>
-  <Box args={[0.49,.7,1.355]} position={[-0.242,-0.44,0]} castShadow receiveShadow>
-    <meshStandardMaterial color="grey"  />    
-
-    </Box>
-  </group>
   {showFutures && !!sceneState.fullfuttermList && sceneState.fullfuttermList.length > 0 &&
     <group position={[0.01, -0.75, 0.5]} rotation={[0, Math.PI / 2, 0]} >
       
@@ -96,11 +76,6 @@ export default function SceneWrapper({sceneState, sceneCalls}: any) {
 
 
 
-
-
-<Box args={[.001,.9,1.1]} position={[0,0.475,0]}>
-      <meshStandardMaterial color={"#222222"} />
-    </Box>
     
     <group position={[0.01, -0.75, 0.5]} rotation={[0, Math.PI / 2, 0]} >
   {!!sceneState.fullmidtermList && sceneState.fullmidtermList.length > 0 &&

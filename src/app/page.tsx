@@ -1,4 +1,4 @@
-import StageContainer from "@/dom/organ/stage/StageContainer";
+import StageContainer2 from "@/dom/organ/stage/StageContainer2";
 
 
 export default function Home() {
@@ -10,8 +10,8 @@ export default function Home() {
       {/* <div className="flex-col">
         <h1>pov: hello web</h1>
       </div> */}
-      <StageContainer>
-      </StageContainer>
+      <StageContainer2>
+      </StageContainer2>
     </main>
   )
 }

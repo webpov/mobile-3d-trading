@@ -16,7 +16,11 @@ import Link from "next/link";
 import ToggleSwitch from "@/model/parts/ToggleSwitch";
 import CallToAction from "@/model/level/CallToAction";
 import ResetLocalStorageRedCube from "@/model/tools/ResetLocalStorageRedCube";
-export default function StageContainer({children}:{children:ReactNode}) {
+import CircuitContainer from "@/model/npc/CircuitContainer"
+import DeviceBodyStructure from "@/model/npc/DeviceBodyStructure";
+
+
+export default function StageContainer2({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"
@@ -99,6 +103,22 @@ export default function StageContainer({children}:{children:ReactNode}) {
     s__Mounted(true);
   }, []);
 
+  const limitOrbit = useMemo(()=>(LS_logsCout > 0 ? {
+    // minPolarAngle: -Math.PI,
+    // maxPolarAngle: Math.PI,
+    
+    minPolarAngle: 1,
+    maxPolarAngle: 2,
+
+    minAzimuthAngle: 0,
+    maxAzimuthAngle: Math.PI*1.99,
+  } : {
+    minPolarAngle: 1,
+    maxPolarAngle: 2,
+    minAzimuthAngle: 0.6,
+    maxAzimuthAngle: Math.PI/1.5,
+  }),[LS_logsCout])
+
   if (!mounted) return <></>;
 
   return (
@@ -137,6 +157,11 @@ export default function StageContainer({children}:{children:ReactNode}) {
             <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webpovlogo.jpg" width={64} height={64} />
             </div>
             </Link>
+              <a href={"/"} className=" opaci-chov--50">
+            <div className="tx-lx bg-w-10 border-white pa-1 pb-0 pt-2 bord-r-25" >
+            <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/wequb.png" width={48} height={48} />
+            </div>
+            </a>
               <Link href={"https://webqub.vercel.app/"} className=" opaci-chov--50">
             <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
             <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webqublogo.jpg" width={48} height={48} />
@@ -276,9 +301,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
         autoRotateSpeed={.075}
         autoRotate={autoRotate}
         dampingFactor={.2}
-        // maxAzimuthAngle={1}
-        // minPolarAngle={1}
-        // maxPolarAngle={2}
+        {...limitOrbit}
        />
 {/*       
       <Html occlude="blending"  transform distanceFactor={.9} rotation={[0,-Math.PI/2,0]}  
@@ -327,8 +350,15 @@ export default function StageContainer({children}:{children:ReactNode}) {
         
         </ToggleSwitch>
       </group>
+
       
-      {LS_logsCout > 2 && <SceneWrapper sceneState={sceneState} 
+      { 
+        <CircuitContainer visible={LS_logsCout > 0} />
+      }
+      {LS_logsCout > 2 && 
+        <DeviceBodyStructure />
+      }
+      {LS_logsCout > 1 && <SceneWrapper sceneState={sceneState} 
         sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
         s__startRotationTime, s__shorttermList, s__isChartLoading}} /> }
