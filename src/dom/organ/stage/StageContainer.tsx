@@ -255,7 +255,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
       gl={{ preserveDrawingBuffer: true, }}
     >
       
-      {LS_logsCout > 1 && 
+      {LS_logsCout > 10 && 
 <GizmoHelper   alignment="bottom-left" margin={[50, 50]} >
         <GizmoViewcube
           
