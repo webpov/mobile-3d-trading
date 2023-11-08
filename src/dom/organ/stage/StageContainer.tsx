@@ -1,7 +1,7 @@
 "use client"
 import { SceneEnv } from "@/model/core/SceneEnv";
 import SceneWrapper from "@/model/level/SceneWrapper";
-import { Box, GizmoHelper, GizmoViewcube, Html, OrbitControls, useTexture } from "@react-three/drei";
+import { Box, GizmoHelper, GizmoViewcube, Html, OrbitControls, Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ReactNode, Suspense, useEffect, useMemo, useState } from "react"
 import { useLocalStorage, useMediaQuery } from "usehooks-ts"
@@ -13,6 +13,8 @@ import { TradingViewChart } from '@/model/tools/charts/TradingViewChart'
 import CandleClickGame from '@/dom/organ/CandleClickGame'
 import Image from "next/image";
 import Link from "next/link";
+import ToggleSwitch from "@/model/parts/ToggleSwitch";
+import CallToAction from "@/model/level/CallToAction";
 export default function StageContainer({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
@@ -68,6 +70,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
     }
   },[points, startRotationTime, isChartLoading, isBuyOrderLoading]);
 
+  const [LS_logsCout, s__LS_logsCout] = useLocalStorage("logsCount",0)
   const [mounted, s__Mounted] = useState(false);
   const [LS_maxScore, s__LS_maxScore] = useLocalStorage("scoreboard",0)
   const triggerStart = () => {
@@ -82,7 +85,14 @@ export default function StageContainer({children}:{children:ReactNode}) {
     s__LS_maxScore(newValue)
   }
 
-
+  const singleFlick = (newState:any) => {
+    // alert(newState.toString())
+    s__LS_logsCout(LS_logsCout+1)
+    if (!newState) {
+      s__buyScore(buyScore+1)
+    }
+    // if ()
+  }
 
   useEffect(() => {
     s__Mounted(true);
@@ -92,6 +102,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
+      {LS_logsCout > 3 &&
     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
     onClick={()=>alert("Funds: "+sceneState.buyScore)}>
       {!!buyScore && <>
@@ -112,8 +123,10 @@ export default function StageContainer({children}:{children:ReactNode}) {
         </div>
         </>}
     </div>
+    }
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
-        {<>
+             {LS_logsCout > 3 &&
+<>
           <div className="flex gap-3 pa-2 flex-justify-center flex-align-center" >
           {isTopRightOpen && <>
           <div className="flex-row gap-3 Q_xs_sm_flex-col">
@@ -162,6 +175,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
           </>} */}
       </div>
+      {LS_logsCout > 3 &&
       <div className="z-600  pr-8 Q_xs_pr-2 pos-abs bottom-0 mb-8 pb-8 right-0" >
         {/* <div className="tx-white">
           <CandleClickGame />
@@ -235,12 +249,13 @@ export default function StageContainer({children}:{children:ReactNode}) {
           </div>
           }
       </div>
-
+}
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:40,position:[isSmallDevice?5:3,0,-2]}}
+      camera={{fov:40,position:[isSmallDevice?5:3,0,LS_logsCout > 3 ? -2 : -0.5]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
       
+      {LS_logsCout > 1 && 
 <GizmoHelper   alignment="bottom-left" margin={[50, 50]} >
         <GizmoViewcube
           
@@ -254,7 +269,7 @@ export default function StageContainer({children}:{children:ReactNode}) {
           
         />
       </GizmoHelper>
-      
+       }
       <OrbitControls
         rotateSpeed={2}
         autoRotateSpeed={.075}
@@ -274,15 +289,44 @@ export default function StageContainer({children}:{children:ReactNode}) {
         </Html> */}
 
       <group rotation={[0,0,0]}>
-      <SceneEnv />
-      <group position={[0,0,0]}>
+
+      {LS_logsCout > 3 && <SceneEnv /> }
+      {LS_logsCout > 3 && <group position={[0,0,0]}>
         <SceneConfig sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
-        </group>
-      <SceneWrapper sceneState={sceneState} 
+        </group> }
+        
+      {LS_logsCout > 3 && <group position={[.18,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
+        <CallToAction sceneState={sceneState} 
+          sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
+        </group> }
+
+        
+      <group position={[-0.5,0,0]}
+      rotation={[0,-Math.PI/2,0]}>
+        
+        {!LS_logsCout  &&<>
+      <ambientLight intensity={0.035} />
+      </>}
+      {/* {!LS_logsCout  &&
+      <Plane args={[7,7]} rotation={[0,Math.PI,0]} castShadow receiveShadow>
+        <meshStandardMaterial side={2} color={"white"} />
+        </Plane>
+        } */}
+      <ToggleSwitch sceneState={sceneState} scale={3}
+          sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}}
+          config={{isConfirmationNeeded:false}}
+          callbacks={{singleFlick}}
+          >
+           
+        
+        </ToggleSwitch>
+      </group>
+      
+      {LS_logsCout > 3 && <SceneWrapper sceneState={sceneState} 
         sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
-        s__startRotationTime, s__shorttermList, s__isChartLoading}} />
+        s__startRotationTime, s__shorttermList, s__isChartLoading}} /> }
         </group>
     </Canvas>
     </div>
