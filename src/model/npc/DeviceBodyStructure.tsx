@@ -24,7 +24,7 @@ return (
   
   
   
-    <Box args={[0.49,.7,1.355]} position={[-0.242,-0.44,0]} castShadow receiveShadow>
+    <Box args={[0.49,.65,.3]} position={[-0.242,-0.44,0]} castShadow receiveShadow>
       <meshStandardMaterial color="grey"  />    
   
       </Box>

@@ -63,7 +63,15 @@ export const getPricesList = async (timeframe, requestToken, startUnixDate) => {
   }
   
 export const getRelevantChartData = (priceList) => {
-  
+    if (!priceList) {
+      return {
+        latestUnix:0,
+        oldestUnix:0,
+        closingPrices:[],
+        volumeList:[], // Include volume in the returned object
+    
+      }
+    }
   let theLastIndex = priceList.length < 500 ? priceList.length-1 : 499
   let latestUnix = parseInt( priceList[theLastIndex][0] )
   let oldestUnix =  parseInt(priceList[0][0])

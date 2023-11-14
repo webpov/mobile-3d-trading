@@ -29,13 +29,27 @@ export default function ToggleSwitch({sceneState, sceneCalls, callbacks, config,
 
   // const [currentState, s__currentState] = useState(false)
 
-
+  const triggerWheel = (e:any) => {
+    e.stopPropagation()
+    console.log("eeeee", e)
+    if (e.wheelDeltaY > 0) {
+      if (!currentState) {
+        triggerToggleClick(e)
+      }
+    }
+    if (e.wheelDeltaY < 0) {
+      if (currentState) {
+        triggerToggleClick(e)
+      }
+    }
+  }
 
   return (<>
-  <group {...props} onClick={triggerToggleClick}>
+  <group {...props} /* onClick={triggerToggleClick} */ /* onWheel={triggerWheel} */
+  onPointerDown={triggerToggleClick}>
 
       
-      <Box args={[0.05,0.05,0.35]} position={[0,0,0]} castShadow receiveShadow
+      <Box args={[0.05,0.05,0.34]} position={[0,0,0]} castShadow receiveShadow
       rotation={[currentState?.5:-0.5,0,0]}
         
       >

@@ -1,10 +1,10 @@
 "use client"
 import { SceneEnv } from "@/model/core/SceneEnv";
 import SceneWrapper from "@/model/level/SceneWrapper";
-import { Box, GizmoHelper, GizmoViewcube, Html, OrbitControls, Plane, useTexture } from "@react-three/drei";
+import { Box, GizmoHelper, GizmoViewcube, Html, MapControls, MeshTransmissionMaterial, OrbitControls, Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { ReactNode, Suspense, useEffect, useMemo, useState } from "react"
-import { useLocalStorage, useMediaQuery } from "usehooks-ts"
+import { ReactNode, Suspense, useEffect, useMemo, useRef, useState } from "react"
+import { useLocalStorage, useMap, useMediaQuery } from "usehooks-ts"
 import { getCurrentPrices, getPricesList, getRelevantChartData } from "../../../../script/util/helper/kline";
 import SceneConfig from "@/model/level/SceneConfig";
 import useSyncedUnixTimer from "../../../../script/util/hook/useSyncedUnixTimer";
@@ -15,13 +15,23 @@ import Image from "next/image";
 import Link from "next/link";
 import ToggleSwitch from "@/model/parts/ToggleSwitch";
 import CallToAction from "@/model/level/CallToAction";
-import ResetLocalStorageRedCube from "@/model/tools/ResetLocalStorageRedCube";
+import SolarFidgetSpinner from "@/model/level/solarsystem/SolarFidgetSpinner";
 import CircuitContainer from "@/model/npc/CircuitContainer"
 import DeviceBodyStructure from "@/model/npc/DeviceBodyStructure";
 import TopRightMenu from "../overlay/TopRightMenu";
 import TextStartAll from "@/model/text/TextStartAll";
 import PerfectSuccess from "@/model/text/PerfectSuccess";
 import JumpingBlobNotification from "@/model/parts/JumpingBlobNotification";
+import * as THREE from 'three';
+import { useLoader } from '@react-three/fiber'
+// import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { Cylinder, useGLTF } from "@react-three/drei";
+import ResetLocalStorageRedCube from "@/model/tools/ResetLocalStorageRedCube";
+import AlertContainer from "../overlay/AlertContainer";
+import { useControls } from 'leva'
+import AudioContainer from "../overlay/AudioContainer";
+import ShadowImage from "@/model/tools/ShadowImage";
+
 
 const BOUNCE_MESSAGES = [
   "Perfect!",
@@ -34,7 +44,7 @@ const BOUNCE_MESSAGES = [
   "Very good!",
 ]
 
-export default function StageContainer2({children}:{children:ReactNode}) {
+export default function BasicGameStage({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"
@@ -43,11 +53,6 @@ export default function StageContainer2({children}:{children:ReactNode}) {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const [isBottomRightOpen, s__isBottomRightOpen] = useState(false)
   const [isTopRightOpen, s__isTopRightOpen] = useState(false)
-  // useEffect(()=>{
-  //   if(!!points) return
-  //   triggerGetPrices()
-    
-  // }),[]
   const dateNow = Date.now()
   const {
     lastPrices,
@@ -75,6 +80,7 @@ export default function StageContainer2({children}:{children:ReactNode}) {
   //   s__startRotationTime(pricesData.latestUnix)
   // }
   // const [sceneState, s__sceneState] = useState();
+  const [isSpinActive, s__isSpinActive] = useState(false)
   const sceneState = useMemo(()=>{
     return {
       points,
@@ -86,11 +92,14 @@ export default function StageContainer2({children}:{children:ReactNode}) {
       shorttermList,
       midtermList,
       fullmidtermList,
+      isSpinActive,
     }
   },[points, startRotationTime, isChartLoading, isBuyOrderLoading]);
-
+  const $solarSystem:any = useRef()
   const [LS_logsCout, s__LS_logsCout] = useLocalStorage("logsCount",0)
   const [msg, s__msg] = useState("");
+  const [fullSpinCount, s__fullSpinCount] = useState(0);
+
   const [bounceMsg, s__bounceMsg] = useState("");
   const [mounted, s__Mounted] = useState(false);
   const [LS_maxScore, s__LS_maxScore] = useLocalStorage("scoreboard",0)
@@ -99,6 +108,11 @@ export default function StageContainer2({children}:{children:ReactNode}) {
     calculateScore(newScore)
     s__points(newScore)
   }
+  // const fullSpinCount = useMemo(()=>{
+  //   if (!$solarSystem.current) { return }
+    
+  //   return $solarSystem.current.score
+  // }, [$solarSystem?.current?.score])
   const calculateScore = (newValue: number) => {
     if (LS_maxScore > newValue) {
       return
@@ -124,6 +138,10 @@ export default function StageContainer2({children}:{children:ReactNode}) {
       // s__msg("testing")
       s__Mounted(true);
   }, []);
+
+  const triggerStartClick = () => {
+    
+  }
 
   const limitOrbit = useMemo(()=>{
     if ( LS_logsCout > 1 ) {
@@ -156,11 +174,63 @@ export default function StageContainer2({children}:{children:ReactNode}) {
       }
     }
   },[LS_logsCout])
+  const DEFAULT_ALERT_REF:any = [["error",""],["warn",""],["wait",""],["success",""],["neutral",""]]
+  const [alertMap,alertMap__do]:any = useMap(DEFAULT_ALERT_REF)
 
+  const alertNotification = (category="neutral", msg="")=>{
+    alertMap__do.setAll(DEFAULT_ALERT_REF)
+        setTimeout(()=>{alertMap__do.set(category, msg)},100)
+    }
+  useEffect(()=>{
+    // triggerStartClick()
+    if (fullSpinCount == 0) { return }
+    console.log("asdasd isSpinActive", fullSpinCount)
+    alertNotification("neutral", "+1 Point!")
+    s__bounceMsg("+1 Point!")
+    
+  },[fullSpinCount])
+
+  // const config = useControls({
+  //   meshPhysicalMaterial: false,
+  //   transmissionSampler: false,
+  //   backside: false,
+  //   samples: { value: 10, min: 1, max: 32, step: 1 },
+  //   resolution: { value: 2048, min: 256, max: 2048, step: 256 },
+  //   transmission: { value: 1, min: 0, max: 1 },
+  //   roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
+  //   thickness: { value: 3.5, min: 0, max: 10, step: 0.01 },
+  //   ior: { value: 1.5, min: 1, max: 5, step: 0.01 },
+  //   chromaticAberration: { value: 0.06, min: 0, max: 1 },
+  //   anisotropy: { value: 0.1, min: 0, max: 1, step: 0.01 },
+  //   distortion: { value: 0.0, min: 0, max: 1, step: 0.01 },
+  //   distortionScale: { value: 0.3, min: 0.01, max: 1, step: 0.01 },
+  //   temporalDistortion: { value: 0.5, min: 0, max: 1, step: 0.01 },
+  //   clearcoat: { value: 1, min: 0, max: 1 },
+  //   attenuationDistance: { value: 0.5, min: 0, max: 10, step: 0.01 },
+  //   attenuationColor: '#ffffff',
+  //   color: '#c9ffa1',
+  //   bg: '#839681'
+  // })
+
+
+  // const obj = useLoader(THREE.OBJLoader, '../models/landscape.obj')
+
+  const audioNotification = (category = "neutral", src = "") => {
+    const audio = new Audio(src);
+    audio.play();
+  };
   if (!mounted) return <></>;
 
   return (
     <div className="flex-col tx-altfont-4  ">
+      
+      <AudioContainer
+                    {...{
+                      s__src: (val: any) => audioNotification("neutral", val),
+                      src: "./sound/magic.wav" // Set the audio source here
+                    }}
+                  />
+      <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("neutral", val)), msg:alertMap.get("neutral")}} />
       {LS_logsCout > 1 &&
     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
     onClick={()=>alert("Funds: "+sceneState.buyScore)}>
@@ -182,6 +252,27 @@ export default function StageContainer2({children}:{children:ReactNode}) {
         </div>
         </>}
     </div>
+    }
+     {LS_logsCout == 0 &&
+     
+     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs bottom-0 mb-8 left-50p opaci-chov--50" 
+     onClick={()=>alert("....")}>
+     <div className="flex-center">
+      <div className="tx-xxl tx-white">
+      →
+      </div>
+        { <>
+          <div className="flex gap-1 pa-2 flex-justify-start" >
+          <div className="tx-lx" >
+          
+          </div>
+          <div className="tx-xl tx-white" >
+            Start {fullSpinCount}
+          </div>
+          </div>
+          </>}
+      </div>
+      </div>
     }
       <div className="z-600  pt-4 pr-4 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
              {LS_logsCout > 7 &&
@@ -283,10 +374,24 @@ export default function StageContainer2({children}:{children:ReactNode}) {
       </div>
 }
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:40,position:[isSmallDevice?5:3,0,LS_logsCout > 7 ? -2 : -1]}}
+      camera={{fov:40,position:[isSmallDevice?10:6,1.5,LS_logsCout > 10 ? -6 : -1]}}
       gl={{ preserveDrawingBuffer: true, }}
     >
+      <Box args={[2,2,2]}>
+      <MeshTransmissionMaterial
+      temporalDistortion={1}
+      distortionScale={1}
       
+            backside
+            backsideThickness={0.1}
+            thickness={0.05}
+            chromaticAberration={0.05}
+            anisotropicBlur={1}
+            clearcoat={1}
+            clearcoatRoughness={1}
+            envMapIntensity={2}
+          />
+      </Box>
       {LS_logsCout > 50 && 
 <GizmoHelper   alignment="bottom-left" margin={[50, 50]} >
         <GizmoViewcube
@@ -302,12 +407,13 @@ export default function StageContainer2({children}:{children:ReactNode}) {
         />
       </GizmoHelper>
        }
+       {/* <MapControls /> */}
       <OrbitControls
         rotateSpeed={2}
-        autoRotateSpeed={.075}
+        autoRotateSpeed={.15}
         autoRotate={autoRotate}
         dampingFactor={.2}
-        {...limitOrbit}
+        // {...limitOrbit}
        />
 {/*       
       <Html occlude="blending"  transform distanceFactor={.9} rotation={[0,-Math.PI/2,0]}  
@@ -320,8 +426,10 @@ export default function StageContainer2({children}:{children:ReactNode}) {
 
       <group rotation={[0,0,0]}>
 
-      {LS_logsCout > 0 && <PerfectSuccess {...{msg, s__msg,  }} /> }
-      {LS_logsCout > 0 && <JumpingBlobNotification {...{msg: bounceMsg, s__msg: s__bounceMsg,  }} /> }
+      {LS_logsCout > 0 && <JumpingBlobNotification {...{msg, s__msg,  }} /> }
+      <group position={[1,0,0]}>
+        {fullSpinCount > 0 && <PerfectSuccess {...{msg: bounceMsg, s__msg: s__bounceMsg,  }} /> }
+      </group>
       {/* {LS_logsCout <= 1 && <>
         <Plane args={[50,50]} rotation={[0,3.14/2,0]} position={[-.5,0,0]}>
         <meshStandardMaterial color="white" />
@@ -332,16 +440,16 @@ export default function StageContainer2({children}:{children:ReactNode}) {
       
       </>}
       <ambientLight intensity={0.02} />
-      <SceneEnv visible={LS_logsCout > 1} /> 
-      {LS_logsCout > 6 && <group position={[0,0,0]}>
+      {/* <SceneEnv visible={LS_logsCout > 1} />  */}
+      {/* {LS_logsCout > 6 && <group position={[0,0,0]}>
         <SceneConfig sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
-        </group> }
+        </group> } */}
         
-      {LS_logsCout > 7 && <group position={[.25,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
+      {/* {LS_logsCout > 7 && <group position={[.25,-.4,-0.45]} rotation={[0,Math.PI/2,0]}>
         <CallToAction sceneState={sceneState} 
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}} />
-        </group> }
+        </group> } */}
 
         
       <group position={[-0.5,0,0]}
@@ -352,26 +460,43 @@ export default function StageContainer2({children}:{children:ReactNode}) {
         <meshStandardMaterial side={2} color={"white"} />
         </Plane>
         } */}
- {LS_logsCout > 0 &&
+
+
+<group  position={[0,-2.5,0]}>
+  <ShadowImage {...{bounceMsg: bounceMsg && "Success!"}} />
+</group>
+
+        
+        
+ {
+        <group position={[0,.8,0]} rotation={[0,Math.PI,0]}>
+          <SolarFidgetSpinner sceneState={sceneState} ref={$solarSystem}
+          sceneCalls={{triggerStartClick, s__isSpinActive, audioNotification}}  
+          {...{fullSpinCount, s__fullSpinCount}}
+          />
+        </group>
+}
+
+{
         <group position={[0,.8,0]}>
-          <ResetLocalStorageRedCube sceneState={sceneState}  />
+          <ResetLocalStorageRedCube sceneState={sceneState} sceneCalls={{triggerStartClick, s__isSpinActive}}  />
         </group>
 }
 
 
-      <ToggleSwitch sceneState={sceneState} scale={3}
+      {/* <ToggleSwitch sceneState={sceneState} scale={3}
           sceneCalls={{s__buyScore, setTimerChartLoading,s__points, trigger__isBuyOrderLoading}}
           config={{isConfirmationNeeded:false}}
           callbacks={{singleFlick}}
           >
            
         
-        </ToggleSwitch>
+        </ToggleSwitch> */}
       </group>
 
       
-      <CircuitContainer visible={LS_logsCout < 9 && LS_logsCout > 4} />
-      
+      {/* <CircuitContainer visible={LS_logsCout < 9 && LS_logsCout > 4} /> */}
+{/*       
       {LS_logsCout > 8 && 
   <>
   <Box args={[0.49,.7,0.5]} position={[-0.242,-0.44,0.4]} castShadow receiveShadow>
@@ -384,14 +509,18 @@ export default function StageContainer2({children}:{children:ReactNode}) {
   </Box>
   </>
       }
-      
+       */}
+{/*        
       {LS_logsCout > 9 && 
         <DeviceBodyStructure />
       }
       {LS_logsCout > 7 && <SceneWrapper sceneState={sceneState} 
         sceneCalls={{s__fullfuttermList,initFuturesTimeframe,
         s__midtermList, s__fullmidtermList,
-        s__startRotationTime, s__shorttermList, s__isChartLoading}} /> }
+        s__startRotationTime, s__shorttermList, s__isChartLoading}} /> } */}
+
+
+
         </group>
     </Canvas>
     </div>
