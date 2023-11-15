@@ -31,6 +31,7 @@ import AlertContainer from "../overlay/AlertContainer";
 import { useControls } from 'leva'
 import AudioContainer from "../overlay/AudioContainer";
 import ShadowImage from "@/model/tools/ShadowImage";
+import { Fog } from "three";
 
 
 const BOUNCE_MESSAGES = [
@@ -49,7 +50,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"
   const timeframe_search = searchParams.get('timeframe') || "1h"
-  const autoRotate = searchParams.has('rotate') || false
+  const noAutoRotate = searchParams.has('norotate') || false
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const [isBottomRightOpen, s__isBottomRightOpen] = useState(false)
   const [isTopRightOpen, s__isTopRightOpen] = useState(false)
@@ -374,8 +375,12 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
       </div>
 }
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:40,position:[isSmallDevice?10:6,1.5,LS_logsCout > 10 ? -6 : -1]}}
+      camera={{fov:60,position:[isSmallDevice?10:6,1.5,LS_logsCout > 10 ? -6 : -1]}}
       gl={{ preserveDrawingBuffer: true, }}
+      onCreated={(state)=>{
+        state.gl.setClearColor("#101319")
+        state.scene.fog = new Fog("#101319",3,12)
+      }}
     >
       <Box args={[2,2,2]}>
       <MeshTransmissionMaterial
@@ -408,10 +413,12 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
       </GizmoHelper>
        }
        {/* <MapControls /> */}
+       {/* <color attach="background" args={['#000000']} />
+              <fog attach="fog" args={['#999999', 1, 3]} />  */}
       <OrbitControls
         rotateSpeed={2}
         autoRotateSpeed={.15}
-        autoRotate={autoRotate}
+        autoRotate={!noAutoRotate}
         dampingFactor={.2}
         // {...limitOrbit}
        />

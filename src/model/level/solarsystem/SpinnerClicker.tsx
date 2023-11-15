@@ -53,7 +53,7 @@ export function SpinnerClicker({sceneState, sceneCalls,fullSpinCount, triggerMod
 
 
     $mainGroupRef.current.rotation.y += SPIN_SPEED * delta
-    if ($mainGroupRef.current.rotation.y > Math.PI * 2) {
+    if ($mainGroupRef.current.rotation.y > Math.PI * 1.95) {
       // $mainGroupRef.current.rotation.y = 0
       s__isSpinActive(false)
       s__reachedEnd(true)

@@ -13,7 +13,9 @@ import { FollowFontText } from "../text/FollowText";
 
 export default function ShadowImage({sceneState, sceneCalls,bounceMsg,  ...props}: any) {
     const texture = useLoader(THREE.TextureLoader, "../textures/shad.png")
-    const { scene: objScene_landscape1 } = useGLTF('../models/landscape.glb')
+    const { scene: biglandscape01 } = useGLTF('../models/biglandscape.glb')
+    // const { scene: objScene_landscape1 } = useGLTF('../models/landscape01.glb')
+    // const { scene: objScene_landscape2 } = useGLTF('../models/landscape02.glb')
 
 
   return (<>
@@ -30,14 +32,22 @@ children-0-material-color={"#666666"}
   
 />
 </group> */}
+ 
+<group scale={[1,1,1]} position={[0,-2.25,0]}>
 
-    <group scale={[3,3,3]} position={[0,-14,0]}>
+<primitive object={biglandscape01} children-0-material-wireframe={true} 
+children-0-material-emissive={"#333"} 
+children-0-material-color={"#000"} 
 
-<primitive object={objScene_landscape1} children-0-material-wireframe={true} 
-children-0-material-color={"#666666"} 
-  
 />
 </group>
+    {/* <group scale={[4,4,4]} position={[0,-10,0]}>
+
+    <primitive object={biglandscape} children-0-material-wireframe={true} 
+children-0-material-color={"#bbb"} 
+  
+/>
+</group> */}
 <group position={[0,3.75,0]}>
         <FollowFontText>
             {bounceMsg}

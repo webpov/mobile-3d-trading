@@ -42,13 +42,18 @@ export function BounceSpinnerClicker({sceneState, sceneCalls,fullSpinCount, trig
       if ($mainGroupRef.current.rotation.y !== targetRotation) {
         const lerpedRotation = $mainGroupRef.current.rotation.y + (targetRotation - $mainGroupRef.current.rotation.y) * LERP_SPEED;
         $mainGroupRef.current.rotation.y =  lerpedRotation;
-        if ($mainGroupRef.current.rotation.y > Math.PI*1.99){
+        if ($mainGroupRef.current.rotation.y > Math.PI*1.95){
             $mainGroupRef.current.rotation.y = 0
             if (reachedHalfEnd) {
               setTargetRotation(0)
               s__reachedHalfEnd(false)
               s__fullSpinCount(fullSpinCount+1)
             }
+        } else {
+          if ($mainGroupRef.current.rotation.y < Math.PI/2) {
+            console.log("$mainGroupRef.current.rotation.y", $mainGroupRef.current.rotation.y)
+            $mainGroupRef.current.rotation.y = 0
+          }
         }
       } 
     return
