@@ -41,6 +41,9 @@ children-0-material-color={"#000"}
 
 />
 </group>
+<Torus args={[4.5,3.3,24,48]} rotation={[Math.PI/2,0,0]} position={[0,-1.2,0]}>
+  <meshStandardMaterial color="#000000" />
+</Torus>
     {/* <group scale={[4,4,4]} position={[0,-10,0]}>
 
     <primitive object={biglandscape} children-0-material-wireframe={true} 
