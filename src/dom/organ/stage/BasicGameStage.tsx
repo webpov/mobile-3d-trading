@@ -375,14 +375,14 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
       </div>
 }
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-      camera={{fov:60,position:[isSmallDevice?10:6,1.5,LS_logsCout > 10 ? -6 : -1]}}
+      camera={{fov:50,position:[isSmallDevice?8:6,1,LS_logsCout > 10 ? -6 : -1]}}
       gl={{ preserveDrawingBuffer: true, }}
       onCreated={(state)=>{
         state.gl.setClearColor("#101319")
-        state.scene.fog = new Fog("#101319",3,12)
+        state.scene.fog = new Fog("#101319",8,16)
       }}
     >
-      <Box args={[2,2,2]}>
+      {/* <Box args={[2,2,2]}>
       <MeshTransmissionMaterial
       temporalDistortion={1}
       distortionScale={1}
@@ -396,7 +396,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
             clearcoatRoughness={1}
             envMapIntensity={2}
           />
-      </Box>
+      </Box> */}
       {LS_logsCout > 50 && 
 <GizmoHelper   alignment="bottom-left" margin={[50, 50]} >
         <GizmoViewcube
@@ -469,7 +469,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
         } */}
 
 
-<group  position={[0,-2.5,0]}>
+<group  position={[0,-3, 0]} scale={.8}>
   <ShadowImage {...{bounceMsg: bounceMsg && "Success!"}} />
 </group>
 

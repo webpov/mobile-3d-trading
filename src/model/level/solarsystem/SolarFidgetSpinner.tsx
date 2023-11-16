@@ -28,7 +28,7 @@ const SolarFidgetSpinner = forwardRef(({sceneState, sceneCalls, fullSpinCount, s
 
   })
 
-  // const sunmap = useTexture("./public/webtown.png")
+  // const moonnormal = useTexture("../public/moonnormal.jpg")
   // const earthmap = useTexture("./textures/smallworld.jpg")
   // const spacemap = useTexture("./textures/space.jpg")
   // const moonmap = useTexture("./textures/moonmap.jpg")
@@ -60,7 +60,7 @@ useEffect(()=>{
   return (<>
 
   
-  <pointLight castShadow  args={[0xfffaf6, .2, 40]} position={[3, 1, -1]} />
+  <pointLight castShadow  args={[0xfffaf6, .75, 40]} position={[3, 1, 2]} />
 <group  >
       <BounceSpinnerClicker {...{sceneCalls,
         // isSpinActive: sceneState.isSpinActive,
