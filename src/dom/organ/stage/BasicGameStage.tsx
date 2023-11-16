@@ -81,7 +81,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
   //   s__startRotationTime(pricesData.latestUnix)
   // }
   // const [sceneState, s__sceneState] = useState();
-  const [isSpinActive, s__isSpinActive] = useState(false)
+  const [isSpinActive, s__isSpinActive] = useState(false);
   const sceneState = useMemo(()=>{
     return {
       points,
@@ -93,7 +93,6 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
       shorttermList,
       midtermList,
       fullmidtermList,
-      isSpinActive,
     }
   },[points, startRotationTime, isChartLoading, isBuyOrderLoading]);
   const $solarSystem:any = useRef()
@@ -254,12 +253,15 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
         </>}
     </div>
     }
-     {LS_logsCout == 0 &&
-     
-     <div className="z-600  pl-8 Q_xs_pl-2 pos-abs bottom-0 mb-8 left-50p opaci-chov--50" 
-     onClick={()=>alert("....")}>
+     {LS_logsCout == 0 &&     
+     <button className={`
+      z-600   bord-r-25 pl-8 Q_xs_pl-2 pos-abs bottom-0 mb-8 left-50p 
+      ${!isSpinActive ? " border-white bg-glass-3 pointer tx-white bg-trans " : " border-red tx-muted bg-b-90 stopcursor"}
+     `}
+
+     onClick={()=>{!isSpinActive && s__isSpinActive(!isSpinActive)}}>
      <div className="flex-center">
-      <div className="tx-xxl tx-white">
+      <div className="tx-xxl ">
       →
       </div>
         { <>
@@ -267,13 +269,13 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
           <div className="tx-lx" >
           
           </div>
-          <div className="tx-xl tx-white" >
+          <div className="tx-xl " >
             Start {fullSpinCount}
           </div>
           </div>
           </>}
       </div>
-      </div>
+      </button>
     }
       <div className="z-600  pt-4 pr-4 Q_xs_pr-2 pos-abs top-0 mb-8 flex-col right-0" >
              {LS_logsCout > 7 &&
@@ -478,8 +480,8 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
  {
         <group position={[0,.8,0]} rotation={[0,Math.PI,0]}>
           <SolarFidgetSpinner sceneState={sceneState} ref={$solarSystem}
-          sceneCalls={{triggerStartClick, s__isSpinActive, audioNotification}}  
-          {...{fullSpinCount, s__fullSpinCount}}
+          sceneCalls={{triggerStartClick, audioNotification}}  
+          {...{fullSpinCount, s__fullSpinCount, s__isSpinActive, isSpinActive}}
           />
         </group>
 }

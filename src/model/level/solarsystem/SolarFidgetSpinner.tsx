@@ -13,12 +13,12 @@ import { SpinnerClicker } from "./SpinnerClicker";
 import { BounceSpinnerClicker } from "./BounceSpinnerClicker";
 
 
-const SolarFidgetSpinner = forwardRef(({sceneState, sceneCalls, fullSpinCount, s__fullSpinCount, ...props}:any,ref:any) => {
+const SolarFidgetSpinner = forwardRef(({sceneState, sceneCalls, isSpinActive, s__isSpinActive, fullSpinCount, s__fullSpinCount, ...props}:any,ref:any) => {
   const $systemSphere:any = useRef()
   const $worldSphere:any = useRef()
   const $sunSphere:any = useRef()
   // const [fullSpinCount, s__fullSpinCount] = useState(0);
-  const [isSpinActive, s__isSpinActive] = useState(false);
+  // const [isSpinActive, s__isSpinActive] = useState(false);
   const [isMoonSpinActive, s__isMoonisSpinActive] = useState(false);
 
   useImperativeHandle(ref, ()=>{
@@ -63,16 +63,17 @@ useEffect(()=>{
   <pointLight castShadow  args={[0xfffaf6, .75, 40]} position={[3, 1, 2]} />
 <group  >
       <BounceSpinnerClicker {...{sceneCalls,
-        // isSpinActive: sceneState.isSpinActive,
-        // s__isSpinActive: sceneCalls.s__isSpinActive,
-        
         isSpinActive,
         s__isSpinActive,
+        
+        // isSpinActive,
+        // s__isSpinActive,
         fullSpinCount, s__fullSpinCount}}
         triggerModel={
           <group position={[0,-1,0]} ref={$sunSphere} >
           <Sphere args={[1,12,12]}>
-            <meshStandardMaterial color="gold"  emissive={isSpinActive ? "#221100" : "#000"} />
+            <meshStandardMaterial color="gold"
+              emissive={isSpinActive ? "#221100" : "#000"} />
           </Sphere>
           </group>
           }
@@ -92,7 +93,7 @@ useEffect(()=>{
         
 <group position={[0,-1,2.2]} ref={$worldSphere} >
 <SpinnerClicker {...{
-        // isSpinActive: sceneState.isSpinActive,
+        // isSpinActive: isSpinActive,
         // s__isSpinActive: sceneCalls.s__isSpinActive,
         sceneCalls,
         isSpinActive: isMoonSpinActive,
