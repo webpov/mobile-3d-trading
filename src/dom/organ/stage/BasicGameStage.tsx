@@ -101,6 +101,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
   const [fullSpinCount, s__fullSpinCount] = useState(0);
 
   const [bounceMsg, s__bounceMsg] = useState("");
+  const [clickedIndex, s__clickedIndex] = useState(0);
   const [mounted, s__Mounted] = useState(false);
   const [LS_maxScore, s__LS_maxScore] = useLocalStorage("scoreboard",0)
   const triggerStart = () => {
@@ -176,7 +177,14 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
   },[LS_logsCout])
   const DEFAULT_ALERT_REF:any = [["error",""],["warn",""],["wait",""],["success",""],["neutral",""]]
   const [alertMap,alertMap__do]:any = useMap(DEFAULT_ALERT_REF)
-
+  const triggerClickedStart = () => {
+    if (!isSpinActive) {
+      s__isSpinActive(!isSpinActive)
+    } else {
+      alert("wrong and before right threshold")
+      s__isSpinActive(false)
+    }
+  }
   const alertNotification = (category="neutral", msg="")=>{
     alertMap__do.setAll(DEFAULT_ALERT_REF)
         setTimeout(()=>{alertMap__do.set(category, msg)},100)
@@ -259,7 +267,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
       ${!isSpinActive ? " border-white bg-glass-3 pointer tx-white bg-trans " : " border-red tx-muted bg-b-90 stopcursor"}
      `}
 
-     onClick={()=>{!isSpinActive && s__isSpinActive(!isSpinActive)}}>
+     onClick={()=>{triggerClickedStart()}}>
      <div className="flex-center">
       <div className="tx-xxl ">
       →
