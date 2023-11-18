@@ -45,7 +45,7 @@ const BOUNCE_MESSAGES = [
   "Very good!",
 ]
 
-export default function BasicGameStage({children}:{children:ReactNode}) {
+export default function BasicFidgetGameStage({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const symbol_search = searchParams.get('symbol') || "BTCUSDT"
   const scalp_search = searchParams.get('scalp') || "1m"

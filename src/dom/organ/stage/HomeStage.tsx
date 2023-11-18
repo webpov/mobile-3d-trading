@@ -78,19 +78,19 @@ export default function HomeStage({children}:{children:ReactNode}) {
                 const lookupGameCat = defaultGameCatsLookup[aGameCat]
                 return (<div key={index} className="w-30">
                     <div  
-                        className={`h-300px tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
+                        className={`h-250px tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
                     >
-                        <div className="Q_xs_md tx-lgx pt-4 ">{aGameCat.toUpperCase()}</div>
+                        <div className="Q_xs_md tx-mdl pt-4 ">{aGameCat.toUpperCase()}</div>
                         <div className="Q_md_lg tx-xl">{aGameCat}</div>
                         <div className="Q_xl_x tx-xxxl">{aGameCat}</div>
 
                         <div className=" tx-bold-8 opaci-50 tx-ls-2 tx-center pt-1">
-                            <div className="Q_xs tx-md ">{lookupGameCat.name}</div>
+                            <div className="Q_xs tx-xsm ">{lookupGameCat.name}</div>
                             <div className="Q_sm_x tx-mdl">{lookupGameCat.name.toUpperCase()}</div>
                         </div>
                         <Link href={lookupGameCat.disabled ? "/x" : lookupGameCat.href} 
                             onClick={()=>triggerTypeClick(aGameCat)}
-                            className="bg-w-10  tx-white tx-altfont-4 tx-shadow-5 tx-bold-8 flex-center opaci-chov--50 box-shadow-5-b nodeco opaci-chov-50 bord-r-50 w-50 pa-5 pos-abs top-50p mb-4" 
+                            className="bg-w-10 Q_xs_px-2  tx-white tx-altfont-4 tx-shadow-5 tx-bold-8 flex-center opaci-chov--50 box-shadow-5-b nodeco opaci-chov-50 bord-r-50 w-50 pa-5 pos-abs top-50p mb-4" 
                             style={{
                                 border:`1px solid ${lookupGameCat.color}`,
                                 color:lookupGameCat.color,

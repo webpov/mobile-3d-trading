@@ -7,7 +7,7 @@ export default function Home() {
   
 
   return (
-    <main className="mainbackground h-100vh w-100vw flex-center"
+    <main className="mainbackground h-min-100vh flex-center flex-align-start py-100"
     >
       {/* <div className="flex-col">
         <h1>pov: hello web</h1>

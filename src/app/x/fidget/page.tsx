@@ -1,4 +1,4 @@
-import BasicGameStage from "@/dom/organ/stage/BasicGameStage";
+import BasicFidgetGameStage from "@/dom/organ/stage/BasicFidgetGameStage";
 import SolarFidgetSpinner from "@/model/level/solarsystem/SolarFidgetSpinner";
 
 
@@ -11,8 +11,8 @@ export default function Home() {
       {/* <div className="flex-col">
         <h1>pov: hello web</h1>
       </div> */}
-      <BasicGameStage>
-      </BasicGameStage>
+      <BasicFidgetGameStage>
+      </BasicFidgetGameStage>
 
     </main>
   )
