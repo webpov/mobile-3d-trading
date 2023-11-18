@@ -55,7 +55,7 @@ const defaultGameTypesLookup:Record<string, GameType> = {
         name: "web pong",
         color:"#9999ff",
         emoji: "🎮",
-        disabled: true,
+        disabled: false,
     },
     "sandbox": {
         href: "/x/sandbox",
