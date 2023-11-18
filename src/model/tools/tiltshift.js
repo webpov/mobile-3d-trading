@@ -3,6 +3,7 @@ import { BlendFunction, Effect, EffectAttribute } from 'postprocessing'
 import { wrapEffect } from './util.tsx'
 import { EffectComposer } from '@react-three/postprocessing'
 import { useControls } from 'leva'
+import { useState } from 'react'
 
 const TiltShiftShader = {
   fragmentShader: `
@@ -101,81 +102,103 @@ export class TiltShiftEffect extends Effect {
 
 const TiltShift = wrapEffect(TiltShiftEffect)
 
+// function TiltShiftEffects() {
+//   const { blur } = useControls({
+//     blur: {
+//       value: 1,
+//       min: 0.0,
+//       max: 2.0,
+//       label: 'Blur'
+//     }
+//   })
+
+//   const { taper } = useControls({
+//     taper: {
+//       value: 0.5,
+//       min: 0.0,
+//       max: 1.0,
+//       label: 'Taper'
+//     }
+//   })
+
+//   const { start } = useControls({
+//     start: {
+//       value: {
+//         x: 0.6,
+//         y: 0.5
+//       },
+//       step: 0.01,
+//       min: 0.0,
+//       max: 1.0,
+//       joystick: 'invertY',
+//       label: 'Start Point'
+//     }
+//   })
+
+//   const { end } = useControls({
+//     end: {
+//       value: {
+//         x: 0.6,
+//         y: 1.0
+//       },
+//       step: 0.01,
+//       min: 0.0,
+//       max: 1.0,
+//       joystick: 'invertY',
+//       label: 'End Point'
+//     }
+//   })
+
+//   const { sampleCount } = useControls({
+//     sampleCount: {
+//       value: 40,
+//       min: 3.0,
+//       max: 100.0,
+//       label: 'Samples'
+//     }
+//   })
+
+//   const { direction } = useControls({
+//     direction: {
+//       value: {
+//         x: 1.0,
+//         y: 1.0
+//       },
+//       step: 0.1,
+//       min: -1.0,
+//       max: 1.0,
+//       joystick: 'invertY',
+//       label: 'Direction'
+//     }
+//   })
+
+//   return (
+//     <EffectComposer>
+//       <TiltShift blur={blur} taper={taper} start={start} end={end} sampleCount={sampleCount} direction={direction} />
+//     </EffectComposer>
+//   )
+// }
 function TiltShiftEffects() {
-  const { blur } = useControls({
-    blur: {
-      value: 1,
-      min: 0.0,
-      max: 2.0,
-      label: 'Blur'
-    }
-  })
-
-  const { taper } = useControls({
-    taper: {
-      value: 0.5,
-      min: 0.0,
-      max: 1.0,
-      label: 'Taper'
-    }
-  })
-
-  const { start } = useControls({
-    start: {
-      value: {
-        x: 0.5,
-        y: 0.0
-      },
-      step: 0.01,
-      min: 0.0,
-      max: 1.0,
-      joystick: 'invertY',
-      label: 'Start Point'
-    }
-  })
-
-  const { end } = useControls({
-    end: {
-      value: {
-        x: 0.5,
-        y: 1.0
-      },
-      step: 0.01,
-      min: 0.0,
-      max: 1.0,
-      joystick: 'invertY',
-      label: 'End Point'
-    }
-  })
-
-  const { sampleCount } = useControls({
-    sampleCount: {
-      value: 40,
-      min: 3.0,
-      max: 100.0,
-      label: 'Samples'
-    }
-  })
-
-  const { direction } = useControls({
-    direction: {
-      value: {
-        x: 1.0,
-        y: 1.0
-      },
-      step: 0.1,
-      min: -1.0,
-      max: 1.0,
-      joystick: 'invertY',
-      label: 'Direction'
-    }
-  })
+  const [blur, setBlur] = useState(1);
+  const [taper, setTaper] = useState(0.5);
+  const [start, setStart] = useState({ x: 0.6, y: 0.5 });
+  const [end, setEnd] = useState({ x: 0.6, y: 1.0 });
+  const [sampleCount, setSampleCount] = useState(40);
+  const [direction, setDirection] = useState({ x: 1.0, y: 1.0 });
 
   return (
     <EffectComposer>
-      <TiltShift blur={blur} taper={taper} start={start} end={end} sampleCount={sampleCount} direction={direction} />
+      <TiltShift
+        blur={blur}
+        taper={taper}
+        start={start}
+        end={end}
+        sampleCount={sampleCount}
+        direction={direction}
+      />
     </EffectComposer>
-  )
+  );
 }
+
 
 export default TiltShiftEffects

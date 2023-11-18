@@ -34,7 +34,7 @@ const defaultGameTypesLookup:Record<string, GameType> = {
         name: "wormhole",
         color:"#ff99ff",
         emoji: "🌀",
-        disabled: true,
+        disabled: false,
     },
     "fidget": {
         href: "/x/fidget",
@@ -118,7 +118,7 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                 const lookupGameType = defaultGameTypesLookup[aGameType]
                 return (<div key={index} className="w-30">
                     <div  
-                        className={`h-200px tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameType.disabled ? "bg-w-20" : "bg-w-10"}`}
+                        className={` tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameType.disabled ? "bg-w-20" : "bg-w-10"}`}
                     >
                         <div className="Q_xs_sm tx-md pt-4 ">{aGameType.toUpperCase()}</div>
                         <div className="Q_sm_md tx-lgx pt-4 ">{aGameType.toUpperCase()}</div>
@@ -142,6 +142,9 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                             <div className="Q_lg_x tx-lg">Start</div>
                             <div>{lookupGameType.emoji}</div>
                         </Link>
+
+                        <div className="Q_md_x h-100px"></div>
+                        <div className=" h-150px"></div>
                     </div>
                 </div>)
             })}

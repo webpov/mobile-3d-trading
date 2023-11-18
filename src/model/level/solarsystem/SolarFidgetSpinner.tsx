@@ -11,9 +11,11 @@ import SimCardSlot from "@/model/mix/SimCardSlot"
 import * as THREE from 'three';
 import { SpinnerClicker } from "./SpinnerClicker";
 import { BounceSpinnerClicker } from "./BounceSpinnerClicker";
+import { useRouter } from 'next/navigation'
 
 
-const SolarFidgetSpinner = forwardRef(({sceneState, sceneCalls, isSpinActive, s__isSpinActive, fullSpinCount, s__fullSpinCount, ...props}:any,ref:any) => {
+const SolarFidgetSpinner:any = forwardRef(({sceneState, sceneCalls, isSpinActive, s__isSpinActive, fullSpinCount, s__fullSpinCount, ...props}:any,ref:any) => {
+  const router = useRouter()
   const $systemSphere:any = useRef()
   const $worldSphere:any = useRef()
   const $sunSphere:any = useRef()
@@ -105,7 +107,9 @@ useEffect(()=>{
                   </Sphere>
           }
       >
-        <Sphere args={[0.25,12,12]} position={[0,0,.85]} castShadow receiveShadow>
+        <Sphere args={[0.25,12,12]} position={[0,0,.85]} castShadow receiveShadow 
+          onClick={()=>{router.push("/x/fidget?dof"); window.location.reload()}}
+        >
           <meshStandardMaterial color="silver" emissive={isSpinActive ? "#444444" : "#000"} />
         </Sphere>
         </SpinnerClicker>
