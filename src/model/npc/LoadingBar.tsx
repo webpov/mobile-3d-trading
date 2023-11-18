@@ -8,7 +8,7 @@ import { getPricesList, getRelevantChartData } from '@/../script/util/helper/kli
 
 export default function PendulumClock({calls, state}:any) {
   const $cyl:any = useRef()
-  const imgTexture = useTexture("./textures/ccc.jpg")
+  // const imgTexture = useTexture("./textures/ccc.jpg")
   const [spins, s__spins] = useState(0); 
 
 

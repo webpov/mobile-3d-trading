@@ -1,4 +1,4 @@
-import HomeStage from "@/dom/organ/stage/HomeStage";
+import LinkGridStage from "@/dom/organ/stage/LinkGridStage";
 import SolarFidgetSpinner from "@/model/level/solarsystem/SolarFidgetSpinner";
 import Link from "next/link";
 
@@ -18,14 +18,14 @@ export default function Home() {
         🎱
         </div>
         <div className="tx-lx tx-white tx-altfont-1 " >
-         Game Types
+         Home
         </div>
         
         </div>
       
     </Link>
-      <HomeStage>
-      </HomeStage>
+      <LinkGridStage>
+      </LinkGridStage>
 
     </main>
   )

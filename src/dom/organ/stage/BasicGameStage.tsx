@@ -181,7 +181,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
     if (!isSpinActive) {
       s__isSpinActive(!isSpinActive)
     } else {
-      alert("wrong and before right threshold")
+      // alert("wrong and before right threshold")
       s__isSpinActive(false)
     }
   }
@@ -239,27 +239,16 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
                     }}
                   />
       <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("neutral", val)), msg:alertMap.get("neutral")}} />
-      {LS_logsCout > 1 &&
-    <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
-    onClick={()=>alert("Funds: "+sceneState.buyScore)}>
-      {!!buyScore && <>
+      {
+    <Link href="/x" className="z-600 nodeco pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" >
         <div className="flex gap-1 pa-2 flex-justify-start" >
         <div className="tx-lx" >
-        💰
+        🎱
         </div>
-        <div className="tx-xl tx-white" >
-          {buyScore}
+        
         </div>
-        </div>
-        </>}
-      {!buyScore && <>
-        <div className="flex gap-1 pa-2 flex-justify-start" >
-        <div className="tx-lx tx-white flex-center" >
-        💰 <div className="tx-red opaci-50 tx-xxxl pos-abs">X</div>
-        </div>
-        </div>
-        </>}
-    </div>
+      
+    </Link>
     }
      {LS_logsCout == 0 &&     
      <button className={`
@@ -368,6 +357,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
           }
           {children}
         </div>
+        
           }
           {!isBottomRightOpen &&
           <div onClick={()=>{s__isBottomRightOpen(true)}} 

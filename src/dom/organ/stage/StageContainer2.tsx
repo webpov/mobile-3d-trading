@@ -5,9 +5,9 @@ import { Box, GizmoHelper, GizmoViewcube, Html, OrbitControls, Plane, useTexture
 import { Canvas } from "@react-three/fiber";
 import { ReactNode, Suspense, useEffect, useMemo, useState } from "react"
 import { useLocalStorage, useMediaQuery } from "usehooks-ts"
-import { getCurrentPrices, getPricesList, getRelevantChartData } from "../../../../script/util/helper/kline";
+import { getCurrentPrices, getPricesList, getRelevantChartData } from "@/../script/util/helper/kline";
 import SceneConfig from "@/model/level/SceneConfig";
-import useSyncedUnixTimer from "../../../../script/util/hook/useSyncedUnixTimer";
+import useSyncedUnixTimer from "@/../script/util/hook/useSyncedUnixTimer";
 import { useSearchParams } from "next/navigation";
 import { TradingViewChart } from '@/model/tools/charts/TradingViewChart'
 import CandleClickGame from '@/dom/organ/CandleClickGame'
@@ -18,7 +18,7 @@ import CallToAction from "@/model/level/CallToAction";
 import ResetLocalStorageRedCube from "@/model/tools/ResetLocalStorageRedCube";
 import CircuitContainer from "@/model/npc/CircuitContainer"
 import DeviceBodyStructure from "@/model/npc/DeviceBodyStructure";
-import TopRightMenu from "../overlay/TopRightMenu";
+import TopRightMenu from "@/dom/organ/overlay/TopRightMenu";
 import TextStartAll from "@/model/text/TextStartAll";
 import PerfectSuccess from "@/model/text/PerfectSuccess";
 import JumpingBlobNotification from "@/model/parts/JumpingBlobNotification";
@@ -161,8 +161,17 @@ export default function StageContainer2({children}:{children:ReactNode}) {
 
   return (
     <div className="flex-col tx-altfont-4  ">
+      <Link href="/x" className="z-600 nodeco pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" >
+        <div className="flex gap-1 pa-2 flex-justify-start" >
+        <div className="tx-lx" >
+        🎱
+        </div>
+        
+        </div>
+      
+    </Link>
       {LS_logsCout > 1 &&
-    <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" 
+    <div className="z-600  pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 mt-100 left-0 opaci-chov--50" 
     onClick={()=>alert("Funds: "+sceneState.buyScore)}>
       {!!buyScore && <>
         <div className="flex gap-1 pa-2 flex-justify-start" >
