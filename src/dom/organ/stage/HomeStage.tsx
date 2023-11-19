@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ReactNode, useState } from "react";
 
 const defaultGameCats = [
-    "world",
-    "player",
-    "goal",
-    "all",
+    // "world",
+    // "player",
+    // "goal",
+    "examples",
 ]
 export type GameCat = {
     href:string
@@ -38,11 +38,11 @@ const defaultGameCatsLookup:Record<string, GameCat> = {
         emoji: "⭐",
         disabled: false,
     },
-    "all": {
+    "examples": {
         href: "/x",
-        name: "All Categories",
+        name: "Categories",
         color:"#00ff00",
-        emoji: "👁️",
+        emoji: "🔠",
         disabled: false,
     },
 }
@@ -67,7 +67,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
         s__loadingCat(categoryString)
     }
     return (<>
-        <div className="tx-white flex-wrap w-100 tx-altfont-1 gap-1 tx-lx ">
+        <div className="tx-white flex-wrap w-100 tx-altfont-1 gap-1 tx-lx py-8 ">
             {!!loadingCat && <>
                 <div className="flex-col">
                     <div className="tx-lg opaci-50">Loading {loadingCat}...</div>
@@ -97,7 +97,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
                                 opacity: lookupGameCat.disabled ? 0.1 : 1
                             }}
                         >
-                            <div className="Q_lg_x tx-lg">View</div>
+                            <div className="Q_lg_x tx-lg">Enter</div>
                             <div>{lookupGameCat.emoji}</div>
                         </Link>
                     </div>

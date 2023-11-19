@@ -4,8 +4,8 @@ import type { Metadata } from 'next'
 
 
 export const metadata: Metadata = {
-  title: 'Game',
-  description: 'Game Description',
+  title: 'WeGame',
+  description: 'Game Types Guide',
 }
 
 export default function RootLayout({
