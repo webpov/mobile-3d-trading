@@ -7,7 +7,7 @@ export default function Home() {
   
 
   return (
-    <main className="mainbackground h-100 py-8 w-100vw flex-center">
+    <main className="mainbackground h-100 py-8 w-100vw flex-center h-min-100vh" >
       <Link href="/" className="z-600 nodeco pl-8 Q_xs_pl-2 pos-abs top-0 mb-8 left-0 opaci-chov--50" >
           <div className="flex gap-1 pa-2 flex-justify-start" >
             <div className="tx-lx" > 

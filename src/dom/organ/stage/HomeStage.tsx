@@ -70,7 +70,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
         s__loadingCat(categoryString)
     }
     return (<>
-        <div className="tx-white flex-col gap-4 w-100 tx-altfont-1 gap-1 tx-lx py-8 ">
+        <div className="tx-white Q_xs_sm_flex-row flex-col flex-justify-center gap-4 w-100 tx-altfont-1 gap-1 tx-lx py-8 ">
             {!!loadingCat && <>
                 <div className="flex-col">
                     <div className="tx-lg opaci-50">Loading {loadingCat}...</div>
@@ -111,8 +111,9 @@ export default function HomeStage({children}:{children:ReactNode}) {
                     </div>
                 </div>)
             })}
-            <hr className="w-50 opaci-10" />
-            <div>WebPOV Apps</div>
+            
+            <hr className="w-50 opaci-10 Q_md_x" />
+            <div className="Q_md_x">WebPOV Apps</div>
             <TopRightMenu />
         </div>
     </>)
