@@ -8,12 +8,14 @@ import Link from "next/link";
 import WormHoleModel from "@/model/parts/WormHoleModel";
 import { Fog } from "three";
 import The3DPong from "@/model/npc/The3DPong";
+import { LoadingFullScreen } from "@/model/tools/LoadingFullScreen";
 
 
 export default function MiniGameStage({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
   const noAutoRotate = searchParams.has('norotate') || false
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const screenSizeRelativeZoomDistance = isSmallDevice?5:2.5
   const [mounted, s__Mounted] = useState(false);
   const $pongGame:any = useRef()
   const onGameEnd = (val:number)=>{
@@ -25,7 +27,7 @@ export default function MiniGameStage({children}:{children:ReactNode}) {
       s__Mounted(true);
   }, []);
 
-  if (!mounted) return <></>;
+  if (!mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">
@@ -37,11 +39,11 @@ export default function MiniGameStage({children}:{children:ReactNode}) {
         </div>
       </Link>
       <Canvas style={{width:"100vw",height:"100vh"}} shadows 
-        camera={{fov:50,position:[isSmallDevice?8:6,1,0]}}
+        camera={{fov:50,position:[screenSizeRelativeZoomDistance,1,0]}}
         gl={{ preserveDrawingBuffer: true, }}
         onCreated={(state)=>{ state.gl.setClearColor("#101319"); state.scene.fog = new Fog("#101319",8,16) }}
       >
-        <OrbitControls rotateSpeed={2} autoRotateSpeed={.15} autoRotate={!noAutoRotate} dampingFactor={.2}
+        <OrbitControls rotateSpeed={0.1} autoRotateSpeed={.15} autoRotate={!noAutoRotate} dampingFactor={.2} 
             minAzimuthAngle={Math.PI*2}
             maxAzimuthAngle={Math.PI*2}
             minPolarAngle={0.5}

@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import WormHoleModel from "@/model/parts/WormHoleModel";
 import { Fog } from "three";
+import { LoadingFullScreen } from "@/model/tools/LoadingFullScreen";
 
 
 export default function ModelGameStage({children}:{children:ReactNode}) {
@@ -19,7 +20,7 @@ export default function ModelGameStage({children}:{children:ReactNode}) {
       s__Mounted(true);
   }, []);
 
-  if (!mounted) return <></>;
+  if (mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">

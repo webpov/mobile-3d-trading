@@ -78,25 +78,11 @@ export const The3DPong:any = forwardRef(({calls}:any,ref:any) => {
     setPlayerPaddlePosition(newPosition);
   };
 
-  const [form, s__form] = useState({
-    id: "BTCUSDT4H",
-  })
 
   return (
     <>
-
-      {/* {!!form.id && form.id.split("USDT").length > 1 && <>
-
-    <group position={[0,0,4]}>
-      <LocalTradingBox
-        {...{form}}
-      />
-
-      </group>
-    </>} */}
-
       {/* SCORE */}
-      <group position={[0.5, -0.185, 2.5]} rotation={[0, Math.PI, 0]} >
+      <group position={[0.5, -0.25, 2.5]} rotation={[0, Math.PI, 0]} >
         <DynaText color={"#0099ff"} text={score < 0 ? "Click the \n BLUE Button \n to Play" : score} font={score < 0 ? 0.1 : 0.4}
           onClick={startGame}
           rotation={[-Math.PI / 2, 0, Math.PI]}
@@ -115,9 +101,6 @@ export const The3DPong:any = forwardRef(({calls}:any,ref:any) => {
           <meshStandardMaterial color="#eee" />
         </Box>
       </group>
-      <Box position={[-0.4, -1.05, 6.57]} args={[0.8, 0.2, 0.7]} castShadow receiveShadow>
-        <meshStandardMaterial color={"#ffffff"} />
-      </Box>
       {/* SCREEN */}
       <group position={[0, -0., 0.9]}>
         <Box args={[2.1, 1.62, 0.15]} castShadow receiveShadow>
@@ -133,18 +116,6 @@ export const The3DPong:any = forwardRef(({calls}:any,ref:any) => {
         >
           <meshStandardMaterial color={"#0099ff"} />
         </Box>
-        {/* SOUTH BUTTON */}
-        {/* <Box args={[0.5, 0.2, 0.3]} castShadow receiveShadow position={[0, -0.2, -0.9]}
-            onClick={movePlayerPaddleNorth}
-        >
-          <meshStandardMaterial color="#9933ff" />
-        </Box>
-        <Box args={[0.5, 0.2, 0.3]} castShadow receiveShadow position={[0, -0.2, -1.3]}
-            onClick={movePlayerPaddleSouth}
-        >
-          <meshStandardMaterial color="#cc99cc" />
-        </Box> */}
-        {/* NORTH BUTTON */}
 
         {/* BALL */}
         <Box args={[0.1, 0.1, 0.1]} castShadow receiveShadow ref={$theBall} scale={0.9}>

@@ -22,6 +22,7 @@ import TopRightMenu from "@/dom/organ/overlay/TopRightMenu";
 import TextStartAll from "@/model/text/TextStartAll";
 import PerfectSuccess from "@/model/text/PerfectSuccess";
 import JumpingBlobNotification from "@/model/parts/JumpingBlobNotification";
+import { LoadingFullScreen } from "@/model/tools/LoadingFullScreen";
 
 const BOUNCE_MESSAGES = [
   "Perfect!",
@@ -157,7 +158,7 @@ export default function StageContainer2({children}:{children:ReactNode}) {
     }
   },[LS_logsCout])
 
-  if (!mounted) return <></>;
+  if (mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">

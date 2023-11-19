@@ -17,6 +17,7 @@ import AudioContainer from "../overlay/AudioContainer";
 import ShadowImage from "@/model/tools/ShadowImage";
 import { Fog } from "three";
 import TiltShiftEffects from '@/model/tools/tiltshift'
+import { LoadingFullScreen } from "@/model/tools/LoadingFullScreen";
 
 const BOUNCE_MESSAGES = [
   "Perfect!",
@@ -182,7 +183,8 @@ export default function BasicFidgetGameStage({children}:{children:ReactNode}) {
     const audio = new Audio(src);
     audio.play();
   };
-  if (!mounted) return <></>;
+  
+  if (!mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">
