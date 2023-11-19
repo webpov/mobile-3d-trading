@@ -79,7 +79,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
             </>}
             {!loadingCat && gameCats.map((aGameCat:string, index: number) => {
                 const lookupGameCat = defaultGameCatsLookup[aGameCat]
-                return (<div key={index} className="w-30">
+                return (<div key={index} className="w-50">
                     <div  
                         className={`h-250px pt-2 tx-white opaci-hov-75 bord-r-25  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
                     >
@@ -104,6 +104,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
                                 opacity: lookupGameCat.disabled ? 0.1 : 1
                             }}
                         >
+                            <div className="Q_xs_lg tx-lg">Enter</div>
                             <div className="Q_lg_x tx-lg">Enter</div>
                             {/* <div>{lookupGameCat.emoji}</div> */}
                         </Link>
