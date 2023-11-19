@@ -20,6 +20,7 @@ export type GameType = {
     gradient:string
     emoji:string
     disabled: boolean
+    gameList?: any[]
 }
 
 const defaultGameTypesLookup:Record<string, GameType> = {
@@ -62,6 +63,12 @@ const defaultGameTypesLookup:Record<string, GameType> = {
         gradient:"#ff9900",
         emoji: "🎮",
         disabled: false,
+        gameList: [
+          {href:"/",name:"asd"},
+          {href:"/",name:"fgh"},
+          {href:"/",name:"sdf"},
+          {href:"/",name:"qwe"},
+        ],
     },
     "sandbox": {
         href: "https://webqub.vercel.app",
@@ -141,15 +148,42 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                         <div className="Q_sm tx-lgx pt-4 ">{aGameType.toUpperCase()}</div>
                         <div className="Q_md_lg tx-xl">{aGameType}</div>
                         <div className="Q_xl_x tx-xxxl">{aGameType}</div>
-
+                      
                         <div className=" tx-bold-8 opaci-50 tx-ls-2 tx-center pt-1">
                             <div className="Q_xs tx-xsm ">{lookupGameType.name}</div>
                             <div className="Q_sm tx-md ">{lookupGameType.name}</div>
-                            <div className="Q_sm_x tx-mdl">{lookupGameType.name.toUpperCase()}</div>
+                            <div className="Q_md_x tx-mdl">{lookupGameType.name.toUpperCase()}</div>
                         </div>
+                        
+                        {/* {!!lookupGameType.gameList && lookupGameType.gameList.length > 0 &&
+                          <details className="w-100 pos-abs bottom-0 right-0  ">
+                            <summary className="flex flex-justify-end my-2  opaci-chov-50 pos-abs right-0 bottom-0">
+                              <button  className="noclick tx-bold-8 opaci-chov--25 opaci-75 tx-ls-2 tx-center pt-1 bg-w-10 tx-white bord-r-50 pa-1">
+                                <div className="Q_xs tx-xsm ">More</div>
+                                <div className="Q_sm tx-md ">More</div>
+                                <div className="Q_md_x tx-mdl">More</div>
+                              </button>
+                            </summary>
+                            <div className="w-100 flex-wrap gap-2 mb-8 py-5 z-990 _ddr pos-rel" >
+                            {lookupGameType.gameList.map((aSubGame:any, index: number) => {
+                              return (
+                                <div key={index}
+                                  className="w-30 flex-center z-1001  bg-black tx-white  pa-1 bord-r-25"
+                                >
+                                    <Link href={aSubGame.href} className="z-1001 tx-white nodeco">
+                                      <div className="Q_xs_md tx-lg ">{aSubGame.name}</div>
+                                      <div className="Q_md_lg tx-lgx ">{aSubGame.name}</div>
+                                      <div className="Q_xl_x tx-xl ">{aSubGame.name}</div>
+                                    </Link>
+                                </div>
+                              )
+                              })}
+                            </div>
+                          </details>
+                        } */}
                         <Link href={lookupGameType.disabled ? "/x" : lookupGameType.href} 
                             onClick={()=>triggerTypeClick(aGameType)}
-                            className="bg-w-10 Q_xs_px-1 tx-white tx-altfont-4 tx-shadow-5 tx-bold-8 flex-center opaci-chov--50 box-shadow-5-b nodeco opaci-chov-50 bord-r-50 w-50 pa-3 pos-abs top-50p mb-4" 
+                            className="bg-w-10 Q_xs_px-1 z-100 tx-white tx-altfont-4 tx-shadow-5 tx-bold-8 flex-center opaci-chov--50 box-shadow-5-b nodeco opaci-chov-50 bord-r-50 w-50 pa-3 pos-abs top-50p mb-4" 
                             style={{
                                 border:`1px solid ${lookupGameType.color}`,
                                 color:lookupGameType.color,
@@ -157,11 +191,11 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                             }}
                         >
                             {lookupGameType.disabled && `❌`}
-                            <div className="Q_lg_x tx-lg">Start</div>
-                            <div>{lookupGameType.emoji}</div>
+                            <div className="pos-rel Q_lg_x tx-lg">Start</div>
+                            <div className="pos-rel z-100">{lookupGameType.emoji}</div>
                         </Link>
 
-                        <div className="pos-abs top-0 right-0 pa-2 opaci-25 "
+                        <div className="pos-abs top-0 right-0 pa-2 opaci-25 Q_sm_x"
                           title={lookupGameType.disabled ? `Unavailable` : `Available`}
                         >
                           <div className="Q_xs_sm tx-mdl ">{lookupGameType.disabled ? `` : `✅`}</div>
