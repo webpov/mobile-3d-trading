@@ -17,8 +17,9 @@ export type GameType = {
     href:string
     name:string
     color:string
+    gradient:string
     emoji:string
-    disabled:boolean
+    disabled: boolean
 }
 
 const defaultGameTypesLookup:Record<string, GameType> = {
@@ -26,13 +27,15 @@ const defaultGameTypesLookup:Record<string, GameType> = {
         href: "/x/code",
         name: "relativity equation",
         color:"#0099ff",
+        gradient:"#ff99ff",
         emoji: "💻",
-        disabled: true,
+        disabled: true, //true
     },
     "model": {
         href: "/x/model",
         name: "wormhole",
         color:"#ff99ff",
+        gradient:"#ff00ff",
         emoji: "🌀",
         disabled: false,
     },
@@ -40,50 +43,57 @@ const defaultGameTypesLookup:Record<string, GameType> = {
         href: "/x/fidget",
         name: "solar system",
         color:"#ff00ff",
-        emoji: "☀️",
+        gradient:"#00ff99",
+        emoji: "🌸",
         disabled: false,
     },
     "creation": {
         href: "/x/creation",
         name: "3d charting",
         color:"#00ff99",
+        gradient:"#9999ff",
         emoji: "📊",
         disabled: false,
     },
     "minigame": {
         href: "/x/minigame",
-        name: "web pong",
+        name: "pong",
         color:"#9999ff",
+        gradient:"#ff9900",
         emoji: "🎮",
         disabled: false,
     },
     "sandbox": {
-        href: "/x/sandbox",
-        name: "byte city",
+        href: "https://webqub.vercel.app",
+        name: "web qub",
         color:"#ff9900",
-        emoji: "🏙️",
-        disabled: true,
+        gradient:"#009900",
+        emoji: "✴️",
+        disabled: false, 
     },
     "engine": {
-        href: "/x/engine",
+        href: "https://webpov.vercel.app",
         name: "web pov",
         color:"#009900",
+        gradient:"#ffdd00",
         emoji: "🔧",
-        disabled: true,
+        disabled: false, 
     },
     "story": {
-        href: "/x/story",
-        name: "paraguachoa",
+        href: "https://wcity.vercel.app",
+        name: "byte city",
         color:"#ffdd00",
-        emoji: "📖",
-        disabled: true,
+        gradient:"#996633",
+        emoji: "📒",
+        disabled: false, 
     },
     "generative": {
         href: "/x/generative",
         name: "open pet world",
         color:"#996633",
-        emoji: "🌐",
-        disabled: true,
+        gradient:"#336699",
+        emoji: "🔥",
+        disabled: true, //true
     },
 }
 
@@ -116,12 +126,19 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
             </>}
             {!loadingType && gameTypes.map((aGameType:string, index: number) => {
                 const lookupGameType = defaultGameTypesLookup[aGameType]
-                return (<div key={index} className="w-30">
+                return (
+                  <div key={index} className="w-30 opaci-hov-50  bord-r-25"
+                     style={lookupGameType.disabled?undefined:{
+                      padding: "2px",
+                      background:`linear-gradient(45deg, ${lookupGameType.color}, ${lookupGameType.gradient})`
+                    }}>
                     <div  
-                        className={` tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameType.disabled ? "bg-w-20" : "bg-w-10"}`}
+                        className={` tx-white  bord-r-25  nodeco  flex-col flex-justify-start pos-rel
+                         ${!lookupGameType.disabled ? "bg-black" : "bg-w-10" }
+                        `}
                     >
                         <div className="Q_xs_sm tx-md pt-4 ">{aGameType.toUpperCase()}</div>
-                        <div className="Q_sm_md tx-lgx pt-4 ">{aGameType.toUpperCase()}</div>
+                        <div className="Q_sm tx-lgx pt-4 ">{aGameType.toUpperCase()}</div>
                         <div className="Q_md_lg tx-xl">{aGameType}</div>
                         <div className="Q_xl_x tx-xxxl">{aGameType}</div>
 
@@ -139,9 +156,17 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                                 opacity: lookupGameType.disabled ? 0.1 : 1
                             }}
                         >
+                            {lookupGameType.disabled && `❌`}
                             <div className="Q_lg_x tx-lg">Start</div>
                             <div>{lookupGameType.emoji}</div>
                         </Link>
+
+                        <div className="pos-abs top-0 right-0 pa-2 opaci-25 "
+                          title={lookupGameType.disabled ? `Unavailable` : `Available`}
+                        >
+                          <div className="Q_xs_sm tx-mdl ">{lookupGameType.disabled ? `` : `✅`}</div>
+                          <div className="Q_md_x tx-lgx ">{lookupGameType.disabled ? `` : `✅`}</div>
+                        </div>
 
                         <div className="Q_md_x h-100px"></div>
                         <div className=" h-150px"></div>

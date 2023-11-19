@@ -78,7 +78,7 @@ export default function HomeStage({children}:{children:ReactNode}) {
                 const lookupGameCat = defaultGameCatsLookup[aGameCat]
                 return (<div key={index} className="w-30">
                     <div  
-                        className={`h-250px tx-white  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
+                        className={`h-250px  tx-white opaci-hov-75 bord-r-25  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
                     >
                         <div className="Q_xs_md tx-mdl pt-4 ">{aGameCat.toUpperCase()}</div>
                         <div className="Q_md_lg tx-xl">{aGameCat}</div>

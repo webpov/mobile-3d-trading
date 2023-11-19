@@ -5,11 +5,9 @@ export default function Home() {
   
 
   return (
-    <main className="mainbackground "
-    >
+    <main className="mainbackground">
       <MiniGameStage>
       </MiniGameStage>
-
     </main>
   )
 }
