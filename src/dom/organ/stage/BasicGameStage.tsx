@@ -229,7 +229,7 @@ export default function BasicGameStage({children}:{children:ReactNode}) {
     audio.play();
   };
   
-  if (mounted) return <LoadingFullScreen />;
+  if (!mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">

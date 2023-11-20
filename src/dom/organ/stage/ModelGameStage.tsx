@@ -20,7 +20,7 @@ export default function ModelGameStage({children}:{children:ReactNode}) {
       s__Mounted(true);
   }, []);
 
-  if (mounted) return <LoadingFullScreen />;
+  if (!mounted) return <LoadingFullScreen />;
 
   return (
     <div className="flex-col tx-altfont-4  ">
