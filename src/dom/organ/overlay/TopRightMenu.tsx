@@ -7,8 +7,10 @@ export default function TopRightMenu({...props}) {
     return <>
         <div className="flex-row gap-3 Q_xs_sm_flex-col">
             
-            <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50 Q_xs" title="WebPOV">
-              <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
+            <Link href={"https://webpov.vercel.app/"} className=" opaci-chov--50 Q_xs pos-rel" title="WebPOV">
+              <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25 pos-rel noverflow" 
+              style={{background:"linear-gradient(135deg, grey 10%, white)"}}
+              >
               <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webpovlogo.jpg" width={64} height={64} />
               </div>
               </Link>
@@ -38,6 +40,7 @@ export default function TopRightMenu({...props}) {
               <div className="tx-lx bg-white pa-1 pb-0 pt-2 bord-r-25" >
               <Image className="box-shadow-5-b bord-r-100p noverflow" alt="asd" src="/webpovlogo.jpg" width={64} height={64} />
               </div>
+              
               </Link>
     </>
 }

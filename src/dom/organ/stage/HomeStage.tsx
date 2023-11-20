@@ -84,14 +84,15 @@ export default function HomeStage({children}:{children:ReactNode}) {
                         className={`h-250px pt-2 tx-white opaci-hov-75 bord-r-25  nodeco  flex-col flex-justify-start pos-rel ${!lookupGameCat.disabled ? "bg-w-20" : "bg-w-10"}`}
                     >
                         {!!lookupGameCat.name && <>
-                          <div className="Q_xs_md tx-mdl pt-4 ">{lookupGameCat.name.toUpperCase()}</div>
-                          <div className="Q_md_lg tx-xl">{lookupGameCat.name}</div>
-                          <div className="Q_xl_x tx-xxxl">{lookupGameCat.name}</div>
+                          <div className="Q_xs tx-md tx-bold-8 pt-4 tx-center">{lookupGameCat.name.toUpperCase()}</div>
+                          <div className="Q_sm_md tx-mdl tx-bold-8 pt-4 tx-center ">{lookupGameCat.name.toUpperCase()}</div>
+                          <div className="Q_md_lg tx-xl tx-center">{lookupGameCat.name}</div>
+                          <div className="Q_xl_x tx-xxxl tx-center">{lookupGameCat.name}</div>
                         </>}
 
                         {!!lookupGameCat.desc && <>
                           <div className=" tx-bold-8 opaci-50 tx-ls-2 tx-center pa-3">
-                              <div className="Q_xs tx-xsm ">{lookupGameCat.desc}</div>
+                              <div className="Q_xs tx-smd ">{lookupGameCat.desc}</div>
                               <div className="Q_sm_x tx-mdl">{lookupGameCat.desc.toUpperCase()}</div>
                           </div>
                         </>}
@@ -112,9 +113,13 @@ export default function HomeStage({children}:{children:ReactNode}) {
                 </div>)
             })}
             
+            <hr style={{width:"1px"}} className="h-500px opaci-10 Q_xs_md ma-0" />
             <hr className="w-50 opaci-10 Q_md_x" />
-            <div className="Q_md_x">WebPOV Apps</div>
-            <TopRightMenu />
+            <div className="flex-col gap-2">
+                <div className="Q_md_x">WebPOV Apps</div>
+                <div className="Q_xs_md tx-lg mb-4 tx-center">WebPOV <br /> Apps</div>
+                <TopRightMenu />
+            </div>
         </div>
     </>)
 }

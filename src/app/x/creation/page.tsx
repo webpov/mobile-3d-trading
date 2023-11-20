@@ -5,8 +5,7 @@ export default function Home() {
   
 
   return (
-    <main className="mainbackground "
-    >
+    <main className="mainbackground ">
       <StageContainer2>
       </StageContainer2>
     </main>
