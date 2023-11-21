@@ -17,7 +17,7 @@ export default function ShadowImage({sceneState, sceneCalls,bounceMsg,  ...props
   return (<>
   
  
-<group scale={[1,1,1]} position={[0,-2.25,-0.32]}>
+<group scale={[1,1,1]} position={[0,-2.25,-0.45]}>
 
 <primitive object={biglandscape01} children-0-material-wireframe={true} 
 children-0-material-emissive={"#3c3c3c"} 

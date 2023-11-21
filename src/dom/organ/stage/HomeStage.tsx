@@ -4,9 +4,6 @@ import { ReactNode, useState } from "react";
 import TopRightMenu from "../overlay/TopRightMenu";
 
 const defaultGameCats = [
-    // "world",
-    // "player",
-    // "goal",
     "examples",
 ]
 export type GameCat = {
@@ -19,30 +16,9 @@ export type GameCat = {
 }
 
 const defaultGameCatsLookup:Record<string, GameCat> = {
-    "world": {
-        href: "/x",
-        name: "tangible",
-        color:"#ffff33",
-        emoji: "🌎",
-        disabled: false,
-    },
-    "player": {
-        href: "/x",
-        name: "non-fungible",
-        color:"#0099ff",
-        emoji: "🧍",
-        disabled: false,
-    },
-    "goal": {
-        href: "/x",
-        name: "stateful",
-        color:"#ff3333",
-        emoji: "⭐",
-        disabled: false,
-    },
     "examples": {
         href: "/x",
-        name: "Game Examples",
+        name: "Web Game Tutorial",
         color:"#00ff00",
         emoji: "🔠",
         disabled: false,
@@ -112,14 +88,15 @@ export default function HomeStage({children}:{children:ReactNode}) {
                     </div>
                 </div>)
             })}
-            
-            <hr style={{width:"1px"}} className="h-500px opaci-10 Q_xs_md ma-0" />
-            <hr className="w-50 opaci-10 Q_md_x" />
-            <div className="flex-col gap-2">
-                <div className="Q_md_x">WebPOV Apps</div>
-                <div className="Q_xs_md tx-lg mb-4 tx-center">WebPOV <br /> Apps</div>
-                <TopRightMenu />
-            </div>
+            {!loadingCat && <>
+                <hr style={{width:"1px"}} className="h-500px opaci-10 Q_xs_md ma-0" />
+                <hr className="w-50 opaci-10 Q_md_x" />
+                <div className="flex-col gap-2">
+                    <div className="Q_md_x">WebPOV Apps</div>
+                    <div className="Q_xs_md tx-lg mb-4 tx-center">WebPOV <br /> Apps</div>
+                    <TopRightMenu />
+                </div>
+            </>}
         </div>
     </>)
 }

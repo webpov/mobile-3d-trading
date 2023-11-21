@@ -124,9 +124,9 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
         s__loadingType(typeString)
     }
     return (<>
-        <div className="tx-white flex-wrap flex-align-center tx-altfont-1 gap-1 tx-lx ">
+        <div className="tx-white flex-wrap flex-align-stretch  tx-altfont-1 gap-1 tx-lx w-100">
             {!!loadingType && <>
-                <div className="flex-col">
+                <div className="flex-col w-100">
                     <div className="tx-lg opaci-50">Loading {loadingType}...</div>
                     <div className="spin-5 tx-xxxl">|</div>
                 </div>
@@ -134,27 +134,31 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
             {!loadingType && gameTypes.map((aGameType:string, index: number) => {
                 const lookupGameType = defaultGameTypesLookup[aGameType]
                 return (
-                  <div key={index} className="w-30 opaci-hov-50  bord-r-25"
+                  <div key={index} className="w-30 opaci-hov-50   bord-r-25"
                      style={lookupGameType.disabled?undefined:{
                       padding: "2px",
                       background:`linear-gradient(45deg, ${lookupGameType.color}, ${lookupGameType.gradient})`
                     }}>
                     <div  
-                        className={` tx-white  bord-r-25  nodeco  flex-col flex-justify-start pos-rel
+                        className={` tx-white  bord-r-25 h-100 nodeco  flex-col flex-justify-start pos-rel
                          ${!lookupGameType.disabled ? "bg-black" : "bg-w-10" }
                         `}
                     >
-                        <div className="Q_xs_sm tx-md pt-4 ">{aGameType.toUpperCase()}</div>
-                        <div className="Q_sm tx-lgx pt-4 ">{aGameType.toUpperCase()}</div>
-                        <div className="Q_md_lg tx-xl">{aGameType}</div>
-                        <div className="Q_xl_x tx-xxxl">{aGameType}</div>
+                        <div className="tx-center Q_xs_sm tx-md pt-4 ">{index}: {aGameType.toUpperCase()}</div>
+                        <div className="tx-center Q_sm tx-lgx pt-4 ">{index}: {aGameType.toUpperCase()}</div>
+                        <div className="tx-center Q_md_lg tx-xl">{index}: {aGameType}</div>
+                        <div className="tx-center Q_xl_x tx-xxxl">{index}: {aGameType}</div>
                       
                         <div className=" tx-bold-8 opaci-50 tx-ls-2 tx-center pt-1">
                             <div className="Q_xs tx-xsm ">{lookupGameType.name}</div>
                             <div className="Q_sm tx-md ">{lookupGameType.name}</div>
                             <div className="Q_md_x tx-mdl">{lookupGameType.name.toUpperCase()}</div>
                         </div>
-                        
+                        <Link href={`/x/${aGameType}/games`} className=" opaci-chov--50 nodeco mt-3 tx-bold-8 opaci-chov--25 opaci-75 tx-ls-2 tx-center pt-1 bg-w-10 tx-white bord-r-50 pa-1">
+                            <div className="Q_xs tx-xsm ">More</div>
+                            <div className="Q_sm tx-md ">More</div>
+                            <div className="Q_md_x tx-mdl">More</div>
+                        </Link>
                         {/* {!!lookupGameType.gameList && lookupGameType.gameList.length > 0 &&
                           <details className="w-100 pos-abs bottom-0 right-0  ">
                             <summary className="flex flex-justify-end my-2  opaci-chov-50 pos-abs right-0 bottom-0">
@@ -192,13 +196,16 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                         >
                             {lookupGameType.disabled && `❌`}
                             <div className="pos-rel Q_lg_x tx-lg">Start</div>
-                            <div className="pos-rel z-100">{lookupGameType.emoji}</div>
+                            <div className="flex-col">
+                              <div className="pos-rel Q_xs tx-xsm ">Start</div>
+                              <div className="pos-rel z-100">{lookupGameType.emoji}</div>
+                            </div>
                         </Link>
 
-                        <div className="pos-abs top-0 right-0 pa-2 opaci-25 Q_sm_x"
+                        <div className="pos-abs bottom-0 right-0 pa-2 opaci-25 "
                           title={lookupGameType.disabled ? `Unavailable` : `Available`}
                         >
-                          <div className="Q_xs_sm tx-mdl ">{lookupGameType.disabled ? `` : `✅`}</div>
+                          <div className="Q_xs_md tx-mdl ">{lookupGameType.disabled ? `` : `✅`}</div>
                           <div className="Q_md_x tx-lgx ">{lookupGameType.disabled ? `` : `✅`}</div>
                         </div>
 
@@ -208,5 +215,6 @@ export default function LinkGridStage({children}:{children:ReactNode}) {
                 </div>)
             })}
         </div>
+        {!loadingType && children}
     </>)
 }

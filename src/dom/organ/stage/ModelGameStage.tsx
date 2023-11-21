@@ -8,10 +8,12 @@ import Link from "next/link";
 import WormHoleModel from "@/model/parts/WormHoleModel";
 import { Fog } from "three";
 import { LoadingFullScreen } from "@/model/tools/LoadingFullScreen";
+import TiltShiftEffects from "@/model/tools/tiltshift";
 
 
 export default function ModelGameStage({children}:{children:ReactNode}) {
   const searchParams = useSearchParams()
+  const isDOF = searchParams.has('dof')
   const noAutoRotate = searchParams.has('norotate') || false
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const [mounted, s__Mounted] = useState(false);
@@ -36,9 +38,13 @@ export default function ModelGameStage({children}:{children:ReactNode}) {
         gl={{ preserveDrawingBuffer: true, }}
         onCreated={(state)=>{ state.gl.setClearColor("#101319"); state.scene.fog = new Fog("#101319",8,16) }}
       >
-        <OrbitControls rotateSpeed={2} autoRotateSpeed={.15} autoRotate={!noAutoRotate} dampingFactor={.2}/>
+        <OrbitControls rotateSpeed={0.75} autoRotateSpeed={.25} autoRotate={!noAutoRotate} 
+          dampingFactor={.01} maxPolarAngle={1.65} minPolarAngle={1.125}
+        />
+        {isDOF && <TiltShiftEffects />}
         <ambientLight intensity={0.02} />
         <pointLight position={[2,2,2]} />
+        <pointLight position={[-1,1,-3]} intensity={0.05} />
         <group rotation={[0,0,0]}>
           <group position={[0,0,0]}>
             <Box rotation={[1,1,1]}> <meshStandardMaterial color="white" /> </Box>

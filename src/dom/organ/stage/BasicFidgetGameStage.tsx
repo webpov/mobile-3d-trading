@@ -209,22 +209,20 @@ export default function BasicFidgetGameStage({children}:{children:ReactNode}) {
     }
      {LS_logsCout == 0 &&     
      <button className={`
-      z-600   bord-r-25 pl-8 Q_xs_pl-2 pos-abs bottom-0 mb-8 left-50p 
+      z-600   bord-r-25  pos-abs bottom-0 mb-8 
       ${!isSpinActive ? " border-white bg-glass-3 pointer tx-white bg-trans " : " border-red tx-muted bg-b-90 stopcursor"}
      `}
 
      onClick={()=>{triggerClickedStart()}}>
-     <div className="flex-center">
-      <div className="tx-xxl ">
-      →
-      </div>
+     <div className="flex-center ">
+      {!fullSpinCount && <div className="tx-xxl pl-4">→</div>}
         { <>
-          <div className="flex gap-1 pa-2 flex-justify-start" >
-          <div className="tx-lx" >
+          <div className="flex gap-1 pa-2 flex-justify-start " >
           
-          </div>
-          <div className="tx-xl " >
-            Start {fullSpinCount}
+          <div className="tx-lgx flex-center gap-2" >
+            {!!fullSpinCount && <div>Points: </div>}
+            {!fullSpinCount && <div>Start</div>}
+            {fullSpinCount}
           </div>
           </div>
           </>}
