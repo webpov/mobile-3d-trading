@@ -17,8 +17,9 @@ export default function Home() {
             <div className="tx-lx tx-white tx-altfont-1 " > WeGame </div>
           </div>
       </Link>
-      <HomeStage>
-      </HomeStage>
+      <h1 className="tx-white tx-xxxl">Minigames</h1>
+      {/* <HomeStage>
+      </HomeStage> */}
     </main>
   )
 }
